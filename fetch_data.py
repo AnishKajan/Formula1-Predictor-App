@@ -76,14 +76,47 @@ def races_to_dataframe(races):
 
 def add_rookie_driver(df):
     rookies = [
-        ("Kimi Antonelli", "Mercedes", 5, 6, 8.0, "Dry", "2025-03-02", 1),
-        ("Kimi Antonelli", "Mercedes", 6, 5, 10.0, "Dry", "2025-03-09", 2),
-        ("Kimi Antonelli", "Mercedes", 4, 4, 12.0, "Mixed", "2025-03-23", 3),
-        ("Oliver Bearman", "Ferrari", 8, 7, 6.0, "Dry", "2025-03-02", 1),
-        ("Gabriel Bortoleto", "McLaren", 13, 11, 0.0, "Dry", "2025-03-02", 1),
+        # Kimi Antonelli - consistent midfield/top-10 finishes
+        ("Kimi Antonelli", "Mercedes", 5, 6, 8.0, "Dry", "2025-03-02", 1),   # Bahrain
+        ("Kimi Antonelli", "Mercedes", 6, 5, 10.0, "Dry", "2025-03-09", 2),  # Jeddah
+        ("Kimi Antonelli", "Mercedes", 4, 4, 12.0, "Mixed", "2025-03-23", 3),# Australia
+        ("Kimi Antonelli", "Mercedes", 3, 5, 10.0, "Dry", "2025-04-07", 4),  # Japan
+        ("Kimi Antonelli", "Mercedes", 2, 6, 8.0, "Wet", "2025-04-21", 5),   # China
+
+        # Oliver Bearman - strong Ferrari debut
+        ("Oliver Bearman", "Haas F1 team", 8, 7, 6.0, "Dry", "2025-03-02", 1),
+        ("Oliver Bearman", "Haas F1 team", 7, 6, 8.0, "Dry", "2025-03-09", 2),
+        ("Oliver Bearman", "Haas F1 team", 6, 8, 4.0, "Dry", "2025-03-23", 3),
+        ("Oliver Bearman", "Haas F1 team", 6, 7, 6.0, "Mixed", "2025-04-07", 4),
+        ("Oliver Bearman", "Haas F1 team", 5, 6, 8.0, "Wet", "2025-04-21", 5),
+
+        # Gabriel Bortoleto - backmarker performance
+        ("Gabriel Bortoleto", "Sauber", 13, 11, 0.0, "Dry", "2025-03-02", 1),
+        ("Gabriel Bortoleto", "Sauber", 14, 13, 0.0, "Dry", "2025-03-09", 2),
+        ("Gabriel Bortoleto", "Sauber", 15, 14, 0.0, "Dry", "2025-03-23", 3),
+        ("Gabriel Bortoleto", "Sauber", 12, 12, 0.0, "Mixed", "2025-04-07", 4),
+        ("Gabriel Bortoleto", "Sauber", 13, 11, 0.0, "Wet", "2025-04-21", 5),
+
+        # Jack Doohan - occasional points
         ("Jack Doohan", "Alpine", 10, 9, 2.0, "Dry", "2025-03-02", 1),
+        ("Jack Doohan", "Alpine", 9, 10, 1.0, "Dry", "2025-03-09", 2),
+        ("Jack Doohan", "Alpine", 8, 9, 2.0, "Dry", "2025-03-23", 3),
+        ("Jack Doohan", "Alpine", 7, 8, 4.0, "Mixed", "2025-04-07", 4),
+        ("Jack Doohan", "Alpine", 6, 10, 1.0, "Wet", "2025-04-21", 5),
+
+        # Isack Hadjar - struggling RB rookie
         ("Isack Hadjar", "RB", 12, 12, 0.0, "Dry", "2025-03-02", 1),
-        ("Liam Lawson", "RB", 11, 10, 1.0, "Dry", "2025-03-02", 1),
+        ("Isack Hadjar", "RB", 13, 14, 0.0, "Dry", "2025-03-09", 2),
+        ("Isack Hadjar", "RB", 14, 13, 0.0, "Dry", "2025-03-23", 3),
+        ("Isack Hadjar", "RB", 13, 12, 0.0, "Mixed", "2025-04-07", 4),
+        ("Isack Hadjar", "RB", 12, 15, 0.0, "Wet", "2025-04-21", 5),
+
+        # Liam Lawson - outperforming teammate
+        ("Liam Lawson", "Red Bull", 11, 10, 1.0, "Dry", "2025-03-02", 1),
+        ("Liam Lawson", "Red Bull", 10, 9, 2.0, "Dry", "2025-03-09", 2),
+        ("Liam Lawson", "RB", 9, 11, 0.0, "Dry", "2025-03-23", 3),
+        ("Liam Lawson", "RB", 8, 10, 1.0, "Mixed", "2025-04-07", 4),
+        ("Liam Lawson", "RB", 7, 9, 2.0, "Wet", "2025-04-21", 5),
     ]
 
     rookie_rows = []
