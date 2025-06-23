@@ -1,0 +1,76 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #374151;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6B7280;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* F1 team color indicators */
+.team-red-bull { background-color: #0600EF; }
+.team-ferrari { background-color: #DC0000; }
+.team-mercedes { background-color: #00D2BE; }
+.team-mclaren { background-color: #FF8700; }
+.team-aston-martin { background-color: #006F62; }
+.team-alpine { background-color: #0090FF; }
+.team-williams { background-color: #005AFF; }
+.team-rb { background-color: #6692FF; }
+.team-haas { background-color: #FFFFFF; }
+.team-kick-sauber { background-color: #52E252; }
+
+/* Grid position indicators */
+.grid-p1 { border-left: 4px solid #FFD700; }
+.grid-p2 { border-left: 4px solid #C0C0C0; }
+.grid-p3 { border-left: 4px solid #CD7F32; }
+.grid-points { border-left: 4px solid #10B981; }
+.grid-no-points { border-left: 4px solid #6B7280; }
