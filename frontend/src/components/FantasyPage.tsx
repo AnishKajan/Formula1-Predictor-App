@@ -3,7 +3,7 @@ import { Users, CloudRain, Sun, CloudDrizzle } from 'lucide-react';
 import { Circuit, PredictionResult } from '../types';
 
 // API URL constant
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5059';
+const API_URL = process.env.REACT_APP_API_URL || '';
 
 interface FantasyEntry {
   driver: string;
