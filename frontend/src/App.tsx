@@ -7,8 +7,8 @@ import CurrentSeason from './components/CurrentSeason';
 import FantasyPage from './components/FantasyPage';
 import LegalFooter from './components/LegalFooter';
 
-// API URL constant
-const API_URL = 'http://localhost:5059';
+// Dynamic API URL - use environment variable or fallback to localhost for development
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5059';
 
 // Enhanced interface for grid entries with status
 interface GridEntry {
@@ -169,18 +169,31 @@ const App: React.FC = () => {
 
   const fetchTeams = async () => {
     try {
+      console.log('Fetching teams from:', `${API_URL}/api/teams`);
       const response = await fetch(`${API_URL}/api/teams`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setTeams(data);
       console.log('✅ Teams loaded');
     } catch (error) {
       console.error('Error fetching teams:', error);
+      console.error('API_URL being used:', API_URL);
     }
   };
 
   const fetchCircuits = async () => {
     try {
+      console.log('Fetching circuits from:', `${API_URL}/api/circuits`);
       const response = await fetch(`${API_URL}/api/circuits`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setCircuits(data);
       if (data.length > 0 && !selectedCircuit) {
@@ -188,26 +201,41 @@ const App: React.FC = () => {
       }
     } catch (error) {
       console.error('Error fetching circuits:', error);
+      console.error('API_URL being used:', API_URL);
     }
   };
 
   const fetchDriverStats = async () => {
     try {
+      console.log('Fetching driver stats from:', `${API_URL}/api/driver-stats`);
       const response = await fetch(`${API_URL}/api/driver-stats`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setDriverStats(data);
     } catch (error) {
       console.error('Error fetching driver stats:', error);
+      console.error('API_URL being used:', API_URL);
     }
   };
 
   const fetchConstructorStandings = async () => {
     try {
+      console.log('Fetching constructor standings from:', `${API_URL}/api/constructor-standings`);
       const response = await fetch(`${API_URL}/api/constructor-standings`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setConstructorStandings(data);
     } catch (error) {
       console.error('Error fetching constructor standings:', error);
+      console.error('API_URL being used:', API_URL);
     }
   };
 
@@ -453,6 +481,7 @@ const App: React.FC = () => {
         entries: raceEntries
       };
 
+      console.log('Making prediction request to:', `${API_URL}/api/predict`);
       const response = await fetch(`${API_URL}/api/predict`, {
         method: 'POST',
         headers: {
@@ -460,6 +489,10 @@ const App: React.FC = () => {
         },
         body: JSON.stringify(requestData)
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const data = await response.json();
       
@@ -501,6 +534,7 @@ const App: React.FC = () => {
       setPredictions(data);
     } catch (error) {
       console.error('Error making prediction:', error);
+      console.error('API_URL being used:', API_URL);
     } finally {
       setLoading(false);
     }
