@@ -8,7 +8,7 @@ import FantasyPage from './components/FantasyPage';
 import LegalFooter from './components/LegalFooter';
 
 // Dynamic API URL - use environment variable or fallback to localhost for development
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5059';
+const API_URL = process.env.REACT_APP_API_URL || '';
 
 // Enhanced interface for grid entries with status
 interface GridEntry {
