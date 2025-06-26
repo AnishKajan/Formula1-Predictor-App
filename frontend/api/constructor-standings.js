@@ -74,7 +74,7 @@ export default function handler(req, res) {
       wins: 0,
       poles: 0,
       podiums: 0,
-      drivers: ['Pierre Gasly', 'Jack Doohan'],
+      drivers: ['Pierre Gasly', 'Franco Colapinto'],
       color: '#0090FF'
     },
     {

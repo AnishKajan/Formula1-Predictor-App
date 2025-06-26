@@ -312,23 +312,23 @@ export default function handler(req, res) {
       height: '1.84m',
       weight: '70kg'
     },
-    'Jack Doohan': {
-      name: 'Jack Doohan',
-      number: 7,
-      country: 'Australia',
-      countryFlag: '🇦🇺',
-      age: 21,
-      birthdate: '2003-01-20',
+    'Franco Colapinto': {
+      name: 'Franco Colapinto',
+      number: 27,
+      country: 'Argentina',
+      countryFlag: '🇦🇷',
+      age: 22,
+      birthdate: '2003-05-27',
       championships: 0,
       wins: 0,
       podiums: 0,
       poles: 0,
       fastestLaps: 0,
       careerPoints: 0,
-      debut: 'Bahrain 2025',
+      debut: 'Emilia-Romagna 2025',
       team: 'Alpine',
-      height: '1.78m',
-      weight: '70kg'
+      height: '1.73m',
+      weight: '64kg'
     },
     'Gabriel Bortoleto': {
       name: 'Gabriel Bortoleto',

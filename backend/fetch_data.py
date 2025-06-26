@@ -97,12 +97,12 @@ def add_rookie_driver(df):
         ("Gabriel Bortoleto", "Sauber", 12, 12, 0.0, "Mixed", "2025-04-07", 4),
         ("Gabriel Bortoleto", "Sauber", 13, 11, 0.0, "Wet", "2025-04-21", 5),
 
-        # Jack Doohan - occasional points
-        ("Jack Doohan", "Alpine", 10, 9, 2.0, "Dry", "2025-03-02", 1),
-        ("Jack Doohan", "Alpine", 9, 10, 1.0, "Dry", "2025-03-09", 2),
-        ("Jack Doohan", "Alpine", 8, 9, 2.0, "Dry", "2025-03-23", 3),
-        ("Jack Doohan", "Alpine", 7, 8, 4.0, "Mixed", "2025-04-07", 4),
-        ("Jack Doohan", "Alpine", 6, 10, 1.0, "Wet", "2025-04-21", 5),
+        # Franco Colapinto - occasional points
+        ("Franco Colapinto", "Alpine", 10, 9, 2.0, "Dry", "2025-03-02", 1),
+        ("Franco Colapinto", "Alpine", 9, 10, 1.0, "Dry", "2025-03-09", 2),
+        ("Franco Colapinto", "Alpine", 8, 9, 2.0, "Dry", "2025-03-23", 3),
+        ("Franco Colapinto", "Alpine", 7, 8, 4.0, "Mixed", "2025-04-07", 4),
+        ("Franco Colapinto", "Alpine", 6, 10, 1.0, "Wet", "2025-04-21", 5),
 
         # Isack Hadjar - struggling RB rookie
         ("Isack Hadjar", "RB", 12, 12, 0.0, "Dry", "2025-03-02", 1),

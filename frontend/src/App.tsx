@@ -412,7 +412,7 @@ const App: React.FC = () => {
       'Esteban Ocon': 0.9,
       'Kimi Antonelli': 0.8,
       'Oliver Bearman': 0.8,
-      'Jack Doohan': 0.75,
+      'Franco Colapinto': 0.7,
       'Gabriel Bortoleto': 0.7,
       'Isack Hadjar': 0.75,
       'Liam Lawson': 0.85

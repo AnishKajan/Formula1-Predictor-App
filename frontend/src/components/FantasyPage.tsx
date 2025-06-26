@@ -48,7 +48,7 @@ const FantasyPage: React.FC<FantasyPageProps> = ({ circuits }) => {
     'George Russell', 'Fernando Alonso', 'Oscar Piastri', 'Carlos Sainz',
     'Pierre Gasly', 'Alex Albon', 'Lance Stroll', 'Yuki Tsunoda',
     'Nico Hülkenberg', 'Esteban Ocon', 'Kimi Antonelli', 'Oliver Bearman',
-    'Jack Doohan', 'Gabriel Bortoleto', 'Isack Hadjar', 'Liam Lawson',
+    'Franco Colapinto', 'Gabriel Bortoleto', 'Isack Hadjar', 'Liam Lawson',
     
     // Legendary drivers
     'Michael Schumacher', 'Ayrton Senna', 'Alain Prost', 'Sebastian Vettel',

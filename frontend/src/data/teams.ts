@@ -336,7 +336,7 @@ export const teams2025: Record<string, TeamData> = {
     chassis: 'A525',
     color: '#0090FF',
     secondaryColor: '#FF87BC',
-    drivers: ['Pierre Gasly', 'Jack Doohan'],
+    drivers: ['Pierre Gasly', 'Franco Colapinto'],
     carImage: '/images/cars/alpine-a525.jpg',
     teamLogo: '/images/logos/alpine-logo.png',
     championships: { constructors: 2, drivers: 0 },

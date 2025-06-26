@@ -83,7 +83,7 @@ export default function handler(req, res) {
       shortName: 'Aston Martin'
     },
     'Alpine': {
-      drivers: ['Pierre Gasly', 'Jack Doohan'],
+      drivers: ['Pierre Gasly', 'Franco Colapinto'],
       car: 'A525',
       principal: 'Oliver Oakes',
       engine: 'Renault',

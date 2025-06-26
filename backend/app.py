@@ -85,7 +85,7 @@ current_teams = {
         "secondaryColor": "#CEDC00"
     },
     "Alpine": {
-        "drivers": ["Pierre Gasly", "Jack Doohan"],
+        "drivers": ["Pierre Gasly", "Franco Colapinto"],
         "car": "A525",
         "principal": "Oliver Oakes",
         "engine": "Renault",
@@ -242,7 +242,7 @@ def get_personalized_tire_strategy(driver, constructor, grid_position, weather, 
         # Inexperienced but eager
         'Kimi Antonelli': {'aggression': 0.8, 'risk_tolerance': 0.9, 'adaptability': 0.6},
         'Oliver Bearman': {'aggression': 0.75, 'risk_tolerance': 0.8, 'adaptability': 0.65},
-        'Jack Doohan': {'aggression': 0.7, 'risk_tolerance': 0.75, 'adaptability': 0.6},
+        'Franco Colapinto': {'aggression': 0.7, 'risk_tolerance': 0.75, 'adaptability': 0.6},
         'Gabriel Bortoleto': {'aggression': 0.7, 'risk_tolerance': 0.8, 'adaptability': 0.6},
         'Isack Hadjar': {'aggression': 0.75, 'risk_tolerance': 0.8, 'adaptability': 0.6},
         'Liam Lawson': {'aggression': 0.8, 'risk_tolerance': 0.75, 'adaptability': 0.65},
@@ -475,7 +475,7 @@ def get_realistic_driver_performance(driver_name):
         # Rookies and backmarkers
         'Kimi Antonelli': {'experience': 1, 'form': 12.5, 'quali_gap': 0.6, 'win_factor': 0.8},
         'Oliver Bearman': {'experience': 1, 'form': 14.2, 'quali_gap': 0.7, 'win_factor': 0.8},
-        'Jack Doohan': {'experience': 1, 'form': 15.1, 'quali_gap': 0.8, 'win_factor': 0.75},
+        'Franco Colapinto': {'experience': 1, 'form': 15.1, 'quali_gap': 0.8, 'win_factor': 0.75},
         'Gabriel Bortoleto': {'experience': 1, 'form': 16.3, 'quali_gap': 0.9, 'win_factor': 0.7},
         'Isack Hadjar': {'experience': 1, 'form': 15.8, 'quali_gap': 0.85, 'win_factor': 0.75},
         'Liam Lawson': {'experience': 2, 'form': 13.9, 'quali_gap': 0.55, 'win_factor': 0.85}
@@ -853,9 +853,9 @@ def get_driver_stats():
         'wins': 0, 'podiums': 1, 'poles': 0, 'championships': 0,
         'debut': 2024, 'age': 19, 'country': '🇬🇧', 'image': '/images/drivers/oliver-bearman.jpg'
     },
-    'Jack Doohan': {
+    'Franco Colapinto': {
         'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
-        'debut': 2025, 'age': 22, 'country': '🇦🇺', 'image': '/images/drivers/jack-doohan.jpg'
+        'debut': 2025, 'age': 22, 'country': '🇦🇷', 'image': '/images/drivers/franco-colapinto.jpg'
     },
     'Gabriel Bortoleto': {
         'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
@@ -908,7 +908,7 @@ def create_fantasy_team():
             'Oscar Piastri': 16, 'Carlos Sainz': 15, 'Pierre Gasly': 12,
             'Alex Albon': 10, 'Lance Stroll': 8, 'Yuki Tsunoda': 6,
             'Nico Hülkenberg': 7, 'Esteban Ocon': 9, 'Kimi Antonelli': 8,
-            'Oliver Bearman': 5, 'Jack Doohan': 4, 'Gabriel Bortoleto': 3,
+            'Oliver Bearman': 5, 'Franco Colapinto': 3, 'Gabriel Bortoleto': 3,
             'Isack Hadjar': 2, 'Liam Lawson': 4
         }
         
