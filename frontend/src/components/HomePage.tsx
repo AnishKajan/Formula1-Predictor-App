@@ -159,7 +159,7 @@ const HomePage: React.FC = () => {
                 <h3 className="text-2xl font-bold mb-4 text-red-400">Today's F1</h3>
                 <p className="text-gray-300 leading-relaxed">
                   Modern F1 features <strong>10 teams</strong> with <strong>20 drivers</strong> competing across 
-                  <strong>24 races</strong> in the 2025 season. Cars reach speeds over <strong>350 km/h</strong> 
+                  <strong> 24 races</strong> in the 2025 season. Cars reach speeds over <strong>350 km/h</strong> 
                   while generating incredible downforce and showcasing cutting-edge technology.
                 </p>
               </div>
