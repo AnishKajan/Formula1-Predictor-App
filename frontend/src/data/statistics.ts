@@ -17,9 +17,9 @@ export interface ConstructorRecord {
 export const f1Statistics = {
   // Most Race Wins (All Time)
   mostWins: [
-    { driver: "Lewis Hamilton", count: 103, years: "2007-2021", flag: "🇬🇧" },
+    { driver: "Lewis Hamilton", count: 103, years: "2007-Present", flag: "🇬🇧" },
     { driver: "Michael Schumacher", count: 91, years: "1991-2006", flag: "🇩🇪" },
-    { driver: "Max Verstappen", count: 61, years: "2016-2024", flag: "🇳🇱" },
+    { driver: "Max Verstappen", count: 61, years: "2016-Present", flag: "🇳🇱" },
     { driver: "Sebastian Vettel", count: 53, years: "2007-2022", flag: "🇩🇪" },
     { driver: "Alain Prost", count: 51, years: "1980-1993", flag: "🇫🇷" },
     { driver: "Ayrton Senna", count: 41, years: "1984-1994", flag: "🇧🇷" },
@@ -31,10 +31,10 @@ export const f1Statistics = {
 
   // Most Podium Finishes
   mostPodiums: [
-    { driver: "Lewis Hamilton", count: 201, years: "2007-2021", flag: "🇬🇧" },
+    { driver: "Lewis Hamilton", count: 201, years: "2007-Present", flag: "🇬🇧" },
     { driver: "Michael Schumacher", count: 155, years: "1991-2006", flag: "🇩🇪" },
     { driver: "Sebastian Vettel", count: 122, years: "2007-2022", flag: "🇩🇪" },
-    { driver: "Max Verstappen", count: 104, years: "2016-2024", flag: "🇳🇱" },
+    { driver: "Max Verstappen", count: 104, years: "2016-Present", flag: "🇳🇱" },
     { driver: "Fernando Alonso", count: 98, years: "2001-2024", flag: "🇪🇸" },
     { driver: "Kimi Räikkönen", count: 103, years: "2001-2021", flag: "🇫🇮" },
     { driver: "Felipe Massa", count: 41, years: "2002-2017", flag: "🇧🇷" },
@@ -45,11 +45,11 @@ export const f1Statistics = {
 
   // Most Pole Positions
   mostPoles: [
-    { driver: "Lewis Hamilton", count: 104, years: "2007-2021", flag: "🇬🇧" },
+    { driver: "Lewis Hamilton", count: 104, years: "2007-Present", flag: "🇬🇧" },
     { driver: "Michael Schumacher", count: 68, years: "1991-2006", flag: "🇩🇪" },
     { driver: "Ayrton Senna", count: 65, years: "1984-1994", flag: "🇧🇷" },
     { driver: "Sebastian Vettel", count: 57, years: "2007-2022", flag: "🇩🇪" },
-    { driver: "Max Verstappen", count: 40, years: "2016-2024", flag: "🇳🇱" },
+    { driver: "Max Verstappen", count: 40, years: "2016-Present", flag: "🇳🇱" },
     { driver: "Jim Clark", count: 33, years: "1960-1968", flag: "🇬🇧" },
     { driver: "Nigel Mansell", count: 32, years: "1980-1995", flag: "🇬🇧" },
     { driver: "Niki Lauda", count: 24, years: "1971-1985", flag: "🇦🇹" },
@@ -73,12 +73,12 @@ export const f1Statistics = {
 
   // Most Fastest Laps
   mostFastestLaps: [
-    { driver: "Lewis Hamilton", count: 67, years: "2007-2021", flag: "🇬🇧" },
+    { driver: "Lewis Hamilton", count: 67, years: "2007-Present", flag: "🇬🇧" },
     { driver: "Michael Schumacher", count: 77, years: "1991-2006", flag: "🇩🇪" },
     { driver: "Kimi Räikkönen", count: 46, years: "2001-2021", flag: "🇫🇮" },
     { driver: "Alain Prost", count: 41, years: "1980-1993", flag: "🇫🇷" },
     { driver: "Sebastian Vettel", count: 38, years: "2007-2022", flag: "🇩🇪" },
-    { driver: "Max Verstappen", count: 33, years: "2016-2024", flag: "🇳🇱" },
+    { driver: "Max Verstappen", count: 33, years: "2016-Present", flag: "🇳🇱" },
     { driver: "Nigel Mansell", count: 30, years: "1980-1995", flag: "🇬🇧" },
     { driver: "Jim Clark", count: 28, years: "1960-1968", flag: "🇬🇧" },
     { driver: "Mika Häkkinen", count: 25, years: "1991-2001", flag: "🇫🇮" },
