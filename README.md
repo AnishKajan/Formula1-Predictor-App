@@ -129,6 +129,18 @@ F1-RACE-PREDICTOR/
 ├── 📚 data/                        # Shared data directory
 └── 📚 docs/                        # Documentation
 ```
+## UI Display
+Home Page
+![HomePage](frontend/public/images/README-Pictures/F1-Race-Predictor-Home.png)
+
+Current Season
+![CurrentSeason](frontend/public/images/README-Pictures/F1-Race-Predictor-CurrentSeason.png)
+
+Prediction Page
+![PredictionPage](frontend/public/images/README-Pictures/F1-Race-Predictor-Fantasy.png)
+
+Fantasy Page
+![FantasyPage](frontend/public/images/README-Pictures/F1-Race-Predictor-Fantasy.png)
 
 ## 🧠 Machine Learning Features
 
@@ -275,19 +287,6 @@ FLASK_DEBUG=False
 - **Visual Feedback**: Loading states and smooth transitions
 - **Error Handling**: Graceful API failure management
 
-## 🧪 Testing
-
-```bash
-# Frontend testing
-cd frontend
-npm test
-
-# Run specific test files
-npm test -- --testPathPattern=App.test
-
-# Coverage report
-npm test -- --coverage
-```
 
 ## 📊 Data Sources
 
@@ -332,13 +331,6 @@ npm test -- --coverage
 - [ ] Social features and sharing
 - [ ] Multi-language support
 
-## 🤝 Contributing
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
 
 ### **Development Guidelines**
 - **TypeScript**: Use strict typing for all components
@@ -382,7 +374,5 @@ This is an independent fan project and is not affiliated with, endorsed by, or c
 - 💼 **LinkedIn**: [Anish Kajan](https://www.linkedin.com/in/anish-kajan/)
 
 ---
-
-**Built with ❤️ for Formula 1 fans and data science enthusiasts**
 
 🏁 *"To achieve anything in this game, you must be prepared to dabble in the boundary of disaster."* - Stirling Moss
