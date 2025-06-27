@@ -137,7 +137,7 @@ Current Season
 ![CurrentSeason](frontend/public/images/README-Pictures/F1-Race-Predictor-CurrentSeason.png)
 
 Prediction Page
-![PredictionPage](frontend/public/images/README-Pictures/F1-Race-Predictor-Fantasy.png)
+![PredictionPage](frontend/public/images/README-Pictures/F1-Race-Predictor-PredictionPage.png)
 
 Fantasy Page
 ![FantasyPage](frontend/public/images/README-Pictures/F1-Race-Predictor-Fantasy.png)
