@@ -200,8 +200,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           age: 25,
           image: '/images/drivers/lando-norris.jpg',
           championships: 0,
-          wins: 8,
-          podiums: 36,
+          wins: 7,
+          podiums: 35,
           debut: 2019
         },
         {
@@ -212,7 +212,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/oscar-piastri.jpg',
           championships: 0,
           wins: 7,
-          podiums: 20,
+          podiums: 19,
           debut: 2023
         }
       ],
@@ -627,7 +627,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           ))}
         </div>
       </div>
-      
+
       {/* Team Information */}
       <div className="relative z-10 px-8 py-12 bg-black/30">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
