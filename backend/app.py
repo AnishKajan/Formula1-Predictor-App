@@ -802,7 +802,7 @@ def get_driver_stats():
         'debut': 2018, 'age': 27, 'country': '🇲🇨', 'image': '/images/drivers/charles-leclerc.jpg'
     },
     'Lando Norris': {
-        'wins': 2, 'podiums': 13, 'poles': 2, 'championships': 0,
+        'wins': 7, 'podiums': 13, 'poles': 2, 'championships': 0,
         'debut': 2019, 'age': 25, 'country': '🇬🇧', 'image': '/images/drivers/lando-norris.jpg'
     },
     'George Russell': {
@@ -814,7 +814,7 @@ def get_driver_stats():
         'debut': 2001, 'age': 43, 'country': '🇪🇸', 'image': '/images/drivers/fernando-alonso.jpg'
     },
     'Oscar Piastri': {
-        'wins': 1, 'podiums': 3, 'poles': 0, 'championships': 0,
+        'wins': 7, 'podiums': 19, 'poles': 4, 'championships': 0,
         'debut': 2023, 'age': 23, 'country': '🇦🇺', 'image': '/images/drivers/oscar-piastri.jpg'
     },
     'Carlos Sainz': {

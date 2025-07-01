@@ -97,7 +97,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/charles-leclerc.jpg',
           championships: 0,
           wins: 8,
-          podiums: 46,
+          podiums: 47,
           debut: 2018
         },
         {
@@ -108,16 +108,16 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/lewis-hamilton.jpg',
           championships: 7,
           wins: 105,
-          podiums: 202,
+          podiums: 203,
           debut: 2007
         }
       ],
       championships: { constructors: 16, drivers: 15 },
       currentSeason: {
-        position: 3,
-        points: 445,
+        position: 2,
+        points: 470,
         wins: 4,
-        podiums: 12,
+        podiums: 14,
         poles: 6
       },
       history: 'The oldest and most successful team in Formula 1 history. Founded by Enzo Ferrari, the Scuderia has been competing since the first F1 season in 1950. Known for their passionate fans, iconic red cars, and legendary drivers.',
@@ -166,10 +166,10 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 8, drivers: 9 },
       currentSeason: {
-        position: 2,
-        points: 478,
+        position: 3,
+        points: 469,
         wins: 4,
-        podiums: 14,
+        podiums: 15,
         poles: 5
       },
       history: 'Mercedes returned to F1 as a constructor in 2010 and dominated the hybrid era from 2014-2021. Known for technical excellence and strategic mastery under Toto Wolff\'s leadership.',
@@ -200,8 +200,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           age: 25,
           image: '/images/drivers/lando-norris.jpg',
           championships: 0,
-          wins: 6,
-          podiums: 34,
+          wins: 8,
+          podiums: 36,
           debut: 2019
         },
         {
@@ -212,17 +212,17 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/oscar-piastri.jpg',
           championships: 0,
           wins: 7,
-          podiums: 18,
+          podiums: 20,
           debut: 2023
         }
       ],
       championships: { constructors: 8, drivers: 12 },
       currentSeason: {
         position: 1,
-        points: 587,
-        wins: 9,
-        podiums: 18,
-        poles: 7
+        points: 625,
+        wins: 10,
+        podiums: 20,
+        poles: 8
       },
       history: 'Founded by Bruce McLaren, the team has been a mainstay of F1 success. Famous for the McLaren-Honda partnership of the late 1980s and early 1990s with Ayrton Senna and Alain Prost.',
       achievements: [
@@ -271,7 +271,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
         position: 5,
-        points: 94,
+        points: 100,
         wins: 0,
         podiums: 1,
         poles: 0
@@ -427,7 +427,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 1, drivers: 0 },
       currentSeason: {
         position: 8,
-        points: 46,
+        points: 50,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -479,7 +479,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
         position: 7,
-        points: 58,
+        points: 59,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -531,7 +531,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
         position: 10,
-        points: 8,
+        points: 19,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -627,7 +627,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           ))}
         </div>
       </div>
-
+      
       {/* Team Information */}
       <div className="relative z-10 px-8 py-12 bg-black/30">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">

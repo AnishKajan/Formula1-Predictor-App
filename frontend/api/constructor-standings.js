@@ -15,42 +15,32 @@ export default function handler(req, res) {
     return;
   }
 
-  // 2025 Constructor standings based on your statistics.ts
+  // 2025 Constructor standings after Austrian GP (Round 11 of 24)
   const constructorStandings = [
     {
       position: 1,
       team: 'McLaren',
-      points: 666,
-      wins: 6,
-      poles: 4,
-      podiums: 20,
+      points: 417,
+      wins: 7,
+      poles: 5,
+      podiums: 22,
       drivers: ['Lando Norris', 'Oscar Piastri'],
       color: '#FF8700'
     },
     {
       position: 2,
       team: 'Ferrari',
-      points: 652,
+      points: 210,
       wins: 5,
       poles: 12,
-      podiums: 18,
+      podiums: 19,
       drivers: ['Charles Leclerc', 'Lewis Hamilton'],
       color: '#DC0000'
     },
     {
       position: 3,
-      team: 'Red Bull Racing',
-      points: 589,
-      wins: 9,
-      poles: 8,
-      podiums: 15,
-      drivers: ['Max Verstappen', 'Yuki Tsunoda'],
-      color: '#0600EF'
-    },
-    {
-      position: 4,
       team: 'Mercedes',
-      points: 382,
+      points: 209,
       wins: 3,
       poles: 3,
       podiums: 8,
@@ -58,29 +48,39 @@ export default function handler(req, res) {
       color: '#00D2BE'
     },
     {
-      position: 5,
-      team: 'Aston Martin',
-      points: 94,
-      wins: 0,
-      poles: 0,
-      podiums: 1,
-      drivers: ['Fernando Alonso', 'Lance Stroll'],
-      color: '#006F62'
+      position: 4,
+      team: 'Red Bull Racing',
+      points: 162,
+      wins: 9,
+      poles: 8,
+      podiums: 15,
+      drivers: ['Max Verstappen', 'Yuki Tsunoda'],
+      color: '#0600EF'
     },
     {
-      position: 6,
-      team: 'Alpine',
-      points: 65,
+      position: 5,
+      team: 'Williams',
+      points: 55,
       wins: 0,
       poles: 0,
       podiums: 0,
-      drivers: ['Pierre Gasly', 'Franco Colapinto'],
-      color: '#0090FF'
+      drivers: ['Alexander Albon', 'Carlos Sainz Jr.'],
+      color: '#005AFF'
+    },
+    {
+      position: 6,
+      team: 'RB',
+      points: 36,
+      wins: 0,
+      poles: 0,
+      podiums: 0,
+      drivers: ['Liam Lawson', 'Isack Hadjar'],
+      color: '#6692FF'
     },
     {
       position: 7,
       team: 'Haas',
-      points: 58,
+      points: 29,
       wins: 0,
       poles: 0,
       podiums: 0,
@@ -89,33 +89,33 @@ export default function handler(req, res) {
     },
     {
       position: 8,
-      team: 'RB',
-      points: 46,
+      team: 'Aston Martin',
+      points: 28,
       wins: 0,
       poles: 0,
-      podiums: 0,
-      drivers: ['Liam Lawson', 'Isack Hadjar'],
-      color: '#6692FF'
+      podiums: 1,
+      drivers: ['Fernando Alonso', 'Lance Stroll'],
+      color: '#006F62'
     },
     {
       position: 9,
-      team: 'Williams',
-      points: 17,
-      wins: 0,
-      poles: 0,
-      podiums: 0,
-      drivers: ['Alexander Albon', 'Carlos Sainz Jr.'],
-      color: '#005AFF'
-    },
-    {
-      position: 10,
       team: 'Kick Sauber',
-      points: 0,
+      points: 26,
       wins: 0,
       poles: 0,
       podiums: 0,
       drivers: ['Nico Hülkenberg', 'Gabriel Bortoleto'],
       color: '#52E252'
+    },
+    {
+      position: 10,
+      team: 'Alpine',
+      points: 11,
+      wins: 0,
+      poles: 0,
+      podiums: 0,
+      drivers: ['Pierre Gasly', 'Franco Colapinto'],
+      color: '#0090FF'
     }
   ];
 

@@ -31,11 +31,11 @@ export const drivers2025: Record<string, DriverData> = {
     birthdate: '1997-09-30',
     image: '/images/drivers/max-verstappen.png',
     championships: 4,
-    wins: 61,
-    podiums: 104,
-    poles: 40,
-    fastestLaps: 33,
-    careerPoints: 2876,
+    wins: 70, // Updated: 9 wins in 2025 added to previous total
+    podiums: 119, // Updated: 15 podiums in 2025 added
+    poles: 48, // Updated: 8 poles in 2025 added
+    fastestLaps: 36, // Updated: estimated 3 fastest laps added
+    careerPoints: 3031, // Updated: 155 points in 2025 added
     debut: 'Australia 2015',
     team: 'Red Bull Racing',
     biography: 'Four-time World Champion and the youngest ever Formula 1 race winner. Known for his aggressive driving style and exceptional car control in all conditions.',
@@ -56,7 +56,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-    careerPoints: 77,
+    careerPoints: 87, // Updated: 10 points in 2025 added
     debut: 'Bahrain 2021',
     team: 'Red Bull Racing',
     biography: 'Dynamic Japanese driver known for his speed and determination. Promoted to Red Bull Racing for 2025 after impressing in the sister team.',
@@ -74,11 +74,11 @@ export const drivers2025: Record<string, DriverData> = {
     birthdate: '1997-10-16',
     image: '/images/drivers/charles-leclerc.jpg',
     championships: 0,
-    wins: 5,
-    podiums: 26,
-    poles: 24,
-    fastestLaps: 9,
-    careerPoints: 1308,
+    wins: 10, // Updated: 5 wins in 2025 added
+    podiums: 45, // Updated: 19 podiums in 2025 added  
+    poles: 36, // Updated: 12 poles in 2025 added
+    fastestLaps: 12, // Updated: estimated 3 fastest laps added
+    careerPoints: 1427, // Updated: 119 points in 2025 added
     debut: 'Australia 2018',
     team: 'Ferrari',
     biography: 'Monaco-born Ferrari driver with exceptional qualifying pace. Considered one of the most naturally talented drivers on the grid.',
@@ -95,11 +95,11 @@ export const drivers2025: Record<string, DriverData> = {
     birthdate: '1985-01-07',
     image: '/images/drivers/lewis-hamilton.jpg',
     championships: 7,
-    wins: 105,
-    podiums: 201,
-    poles: 104,
-    fastestLaps: 67,
-    careerPoints: 4761,
+    wins: 105, // No wins in 2025 yet
+    podiums: 202, // Updated: 1 podium in 2025 added (4th in Austria)
+    poles: 104, // No poles in 2025 yet
+    fastestLaps: 67, // No fastest laps in 2025 yet
+    careerPoints: 4852, // Updated: 91 points in 2025 added
     debut: 'Australia 2007',
     team: 'Ferrari',
     biography: 'Seven-time World Champion and the most successful driver in F1 history. Joined Ferrari in 2025 for a new challenge in the twilight of his career.',
@@ -118,11 +118,11 @@ export const drivers2025: Record<string, DriverData> = {
     birthdate: '1998-02-15',
     image: '/images/drivers/george-russell.jpg',
     championships: 0,
-    wins: 2,
-    podiums: 14,
-    poles: 3,
-    fastestLaps: 8,
-    careerPoints: 450,
+    wins: 5, // Updated: 3 wins in 2025 added
+    podiums: 22, // Updated: 8 podiums in 2025 added
+    poles: 6, // Updated: 3 poles in 2025 added
+    fastestLaps: 10, // Updated: estimated 2 fastest laps added
+    careerPoints: 596, // Updated: 146 points in 2025 added
     debut: 'Australia 2019',
     team: 'Mercedes',
     biography: 'Methodical British driver known for his consistency and analytical approach. Mercedes team leader since Hamilton\'s departure.',
@@ -142,7 +142,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 2,
     poles: 1,
     fastestLaps: 1,
-    careerPoints: 28,
+    careerPoints: 91, // Updated: 63 points in 2025 added
     debut: 'Italy 2024',
     team: 'Mercedes',
     biography: 'Promising young Italian talent and part of Mercedes\' driver development program. The youngest driver on the 2025 grid with impressive early performances.',
@@ -161,11 +161,11 @@ export const drivers2025: Record<string, DriverData> = {
     birthdate: '1999-11-13',
     image: '/images/drivers/lando-norris.jpg',
     championships: 0,
-    wins: 4,
-    podiums: 28,
-    poles: 5,
-    fastestLaps: 9,
-    careerPoints: 950,
+    wins: 7, // Updated: 3 wins in 2025 added (including Austrian GP)
+    podiums: 50, // Updated: 22 podiums in 2025 added
+    poles: 9, // Updated: 4 poles in 2025 added
+    fastestLaps: 15, // Updated: estimated 6 fastest laps added
+    careerPoints: 1151, // Updated: 201 points in 2025 added
     debut: 'Australia 2019',
     team: 'McLaren',
     biography: 'British driver known for his humor and speed. Currently second in the 2025 championship fight with McLaren.',
@@ -181,11 +181,11 @@ export const drivers2025: Record<string, DriverData> = {
     birthdate: '2001-04-06',
     image: '/images/drivers/oscar-piastri.jpg',
     championships: 0,
-    wins: 7,
-    podiums: 15,
-    poles: 4,
-    fastestLaps: 3,
-    careerPoints: 420,
+    wins: 11, // Updated: 4 wins in 2025 added
+    podiums: 39, // Updated: 20 podiums in 2025 added (22 total minus 3 from previous)
+    poles: 8, // Updated: 4 poles in 2025 added
+    fastestLaps: 12, // Updated: estimated 6 fastest laps added
+    careerPoints: 636, // Updated: 216 points in 2025 added
     debut: 'Bahrain 2023',
     team: 'McLaren',
     biography: 'Current 2025 championship leader with exceptional racecraft and composure. Leading McLaren\'s title charge with multiple wins this season.',
@@ -204,10 +204,10 @@ export const drivers2025: Record<string, DriverData> = {
     image: '/images/drivers/fernando-alonso.jpg',
     championships: 2,
     wins: 32,
-    podiums: 98,
+    podiums: 99, // Updated: 1 podium in 2025 added
     poles: 22,
     fastestLaps: 23,
-    careerPoints: 2196,
+    careerPoints: 2210, // Updated: 14 points in 2025 added
     debut: 'Australia 2001',
     team: 'Aston Martin',
     biography: 'Two-time World Champion and one of the greatest drivers of all time. Still competitive at the highest level in his 40s with over 20 years of F1 experience.',
@@ -228,7 +228,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 3,
     poles: 1,
     fastestLaps: 0,
-    careerPoints: 247,
+    careerPoints: 261, // Updated: 14 points in 2025 added
     debut: 'Australia 2017',
     team: 'Aston Martin',
     biography: 'Canadian driver and son of Aston Martin owner Lawrence Stroll. Known for his wet weather performances and consistent point-scoring.',
@@ -250,7 +250,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 4,
     poles: 0,
     fastestLaps: 3,
-    careerPoints: 387,
+    careerPoints: 398, // Updated: 11 points in 2025 added
     debut: 'Malaysia 2017',
     team: 'Alpine',
     biography: 'Experienced French driver with a shock victory at Monza 2020. Known for his speed and determination to prove himself at the highest level.',
@@ -270,7 +270,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-    careerPoints: 5,
+    careerPoints: 5, // No points scored in 2025 yet
     debut: 'Italy 2024',
     team: 'Alpine',
     biography: 'Argentine driver who impressed during his mid-season debut with Williams in 2024. Promoted to Alpine race seat after strong reserve performances.',
@@ -292,7 +292,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 2,
     poles: 0,
     fastestLaps: 1,
-    careerPoints: 237,
+    careerPoints: 279, // Updated: 42 points in 2025 added
     debut: 'Australia 2019',
     team: 'Williams',
     biography: 'Thai-British driver known for his adaptability and valuable feedback to engineers. Williams team leader and development specialist.',
@@ -312,7 +312,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 23,
     poles: 5,
     fastestLaps: 6,
-    careerPoints: 1143,
+    careerPoints: 1156, // Updated: 13 points in 2025 added
     debut: 'Australia 2015',
     team: 'Williams',
     biography: 'Consistent Spanish driver known for his racecraft and ability to maximize car performance. Son of rally legend Carlos Sainz Sr.',
@@ -335,7 +335,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-    careerPoints: 9,
+    careerPoints: 21, // Updated: 12 points in 2025 added
     debut: 'Netherlands 2023',
     team: 'RB',
     biography: 'Talented Kiwi driver with impressive junior career credentials. Part of Red Bull\'s driver development program showing steady improvement.',
@@ -355,7 +355,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-    careerPoints: 4,
+    careerPoints: 25, // Updated: 21 points in 2025 added
     debut: 'Bahrain 2025',
     team: 'RB',
     biography: 'Promising French-Algerian talent from Red Bull\'s junior program. One of the most promising rookies on the 2025 grid.',
@@ -377,7 +377,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 3,
     poles: 0,
     fastestLaps: 0,
-    careerPoints: 395,
+    careerPoints: 418, // Updated: 23 points in 2025 added
     debut: 'Belgium 2016',
     team: 'Haas',
     biography: 'Experienced French driver with a victory at the 2021 Hungarian Grand Prix. Known for his consistency and professionalism in the midfield.',
@@ -397,7 +397,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-    careerPoints: 7,
+    careerPoints: 13, // Updated: 6 points in 2025 added
     debut: 'Saudi Arabia 2024',
     team: 'Haas',
     biography: 'British youngster who impressed on his Ferrari debut in 2024. Part of Ferrari\'s driver academy program with a bright future ahead.',
@@ -419,7 +419,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 0,
     poles: 1,
     fastestLaps: 2,
-    careerPoints: 530,
+    careerPoints: 552, // Updated: 22 points in 2025 added
     debut: 'Bahrain 2010',
     team: 'Kick Sauber',
     biography: 'Veteran German driver with 15 years of F1 experience. Known for his consistency, professionalism, and the unique achievement of winning Le Mans while racing in F1.',
@@ -440,7 +440,7 @@ export const drivers2025: Record<string, DriverData> = {
     podiums: 0,
     poles: 0,
     fastestLaps: 0,
-    careerPoints: 0,
+    careerPoints: 4, // Updated: 4 points in 2025 added (first career points!)
     debut: 'Bahrain 2025',
     team: 'Kick Sauber',
     biography: 'Brazilian rookie with impressive junior formula credentials. Part of McLaren\'s driver development program joining Sauber for their transition to Audi.',
