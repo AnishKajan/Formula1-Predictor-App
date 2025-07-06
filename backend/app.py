@@ -790,39 +790,39 @@ def get_driver_stats():
     
     driver_stats = {
     'Max Verstappen': {
-        'wins': 65, 'podiums': 109, 'poles': 43, 'championships': 4,
+        'wins': 65, 'podiums': 117, 'poles': 44, 'championships': 4,
         'debut': 2015, 'age': 27, 'country': '🇳🇱', 'image': '/images/drivers/max-verstappen.jpg'
     },
     'Lewis Hamilton': {
-        'wins': 105, 'podiums': 201, 'poles': 104, 'championships': 7,
+        'wins': 105, 'podiums': 202, 'poles': 104, 'championships': 7,
         'debut': 2007, 'age': 40, 'country': '🇬🇧', 'image': '/images/drivers/lewis-hamilton.jpg'
     },
     'Charles Leclerc': {
-        'wins': 5, 'podiums': 27, 'poles': 24, 'championships': 0,
+        'wins': 8, 'podiums': 47, 'poles': 26, 'championships': 0,
         'debut': 2018, 'age': 27, 'country': '🇲🇨', 'image': '/images/drivers/charles-leclerc.jpg'
     },
     'Lando Norris': {
-        'wins': 7, 'podiums': 13, 'poles': 2, 'championships': 0,
+        'wins': 8, 'podiums': 36, 'poles': 12, 'championships': 0,
         'debut': 2019, 'age': 25, 'country': '🇬🇧', 'image': '/images/drivers/lando-norris.jpg'
     },
     'George Russell': {
-        'wins': 2, 'podiums': 13, 'poles': 3, 'championships': 0,
+        'wins': 4, 'podiums': 20, 'poles': 6, 'championships': 0,
         'debut': 2019, 'age': 27, 'country': '🇬🇧', 'image': '/images/drivers/george-russell.jpg'
     },
     'Fernando Alonso': {
-        'wins': 32, 'podiums': 98, 'poles': 22, 'championships': 2,
+        'wins': 32, 'podiums': 106, 'poles': 22, 'championships': 2,
         'debut': 2001, 'age': 43, 'country': '🇪🇸', 'image': '/images/drivers/fernando-alonso.jpg'
     },
     'Oscar Piastri': {
-        'wins': 7, 'podiums': 19, 'poles': 4, 'championships': 0,
+        'wins': 7, 'podiums': 20, 'poles': 4, 'championships': 0,
         'debut': 2023, 'age': 23, 'country': '🇦🇺', 'image': '/images/drivers/oscar-piastri.jpg'
     },
     'Carlos Sainz': {
-        'wins': 3, 'podiums': 23, 'poles': 5, 'championships': 0,
+        'wins': 4, 'podiums': 27, 'poles': 6, 'championships': 0,
         'debut': 2015, 'age': 30, 'country': '🇪🇸', 'image': '/images/drivers/carlos-sainz.jpg'
     },
     'Pierre Gasly': {
-        'wins': 1, 'podiums': 4, 'poles': 0, 'championships': 0,
+        'wins': 1, 'podiums': 5, 'poles': 0, 'championships': 0,
         'debut': 2017, 'age': 28, 'country': '🇫🇷', 'image': '/images/drivers/pierre-gasly.jpg'
     },
     'Alex Albon': {
@@ -838,19 +838,19 @@ def get_driver_stats():
         'debut': 2021, 'age': 25, 'country': '🇯🇵', 'image': '/images/drivers/yuki-tsunoda.jpg'
     },
     'Nico Hülkenberg': {
-        'wins': 0, 'podiums': 0, 'poles': 1, 'championships': 0,
+        'wins': 0, 'podiums': 1, 'poles': 1, 'championships': 0,
         'debut': 2010, 'age': 37, 'country': '🇩🇪', 'image': '/images/drivers/nico-hulkenberg.jpg'
     },
     'Esteban Ocon': {
-        'wins': 1, 'podiums': 3, 'poles': 0, 'championships': 0,
+        'wins': 1, 'podiums': 4, 'poles': 0, 'championships': 0,
         'debut': 2016, 'age': 28, 'country': '🇫🇷', 'image': '/images/drivers/esteban-ocon.jpg'
     },
     'Kimi Antonelli': {
-        'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
+        'wins': 0, 'podiums': 1, 'poles': 0, 'championships': 0,
         'debut': 2025, 'age': 18, 'country': '🇮🇹', 'image': '/images/drivers/kimi-antonelli.jpg'
     },
     'Oliver Bearman': {
-        'wins': 0, 'podiums': 1, 'poles': 0, 'championships': 0,
+        'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
         'debut': 2024, 'age': 19, 'country': '🇬🇧', 'image': '/images/drivers/oliver-bearman.jpg'
     },
     'Franco Colapinto': {

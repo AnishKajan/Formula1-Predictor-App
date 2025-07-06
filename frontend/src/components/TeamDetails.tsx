@@ -200,8 +200,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           age: 25,
           image: '/images/drivers/lando-norris.jpg',
           championships: 0,
-          wins: 7,
-          podiums: 35,
+          wins: 8,
+          podiums: 36,
           debut: 2019
         },
         {
@@ -212,7 +212,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/oscar-piastri.jpg',
           championships: 0,
           wins: 7,
-          podiums: 19,
+          podiums: 20,
           debut: 2023
         }
       ],
@@ -513,7 +513,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/nico-hulkenberg.jpg',
           championships: 0,
           wins: 0,
-          podiums: 0,
+          podiums: 1,
           debut: 2010
         },
         {
