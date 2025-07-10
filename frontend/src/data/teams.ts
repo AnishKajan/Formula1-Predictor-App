@@ -61,7 +61,7 @@ export const teams2025: Record<string, TeamData> = {
     shortName: 'Red Bull',
     founded: 2005,
     base: 'Milton Keynes, United Kingdom',
-    teamPrincipal: 'Christian Horner',
+    teamPrincipal: 'Laurent Mekies',
     engine: 'Honda RBPT',
     chassis: 'RB21',
     color: '#0600EF',
@@ -95,7 +95,7 @@ export const teams2025: Record<string, TeamData> = {
       coordinates: { lat: 52.0406, lng: -0.7594 }
     },
     keyPersonnel: {
-      teamPrincipal: 'Christian Horner',
+      teamPrincipal: 'Laurent Mekies',
       technicalDirector: 'Pierre Waché',
       headOfAerodynamics: 'Adrian Newey',
       chiefEngineer: 'Paul Monaghan'
@@ -439,7 +439,7 @@ export const teams2025: Record<string, TeamData> = {
     shortName: 'RB',
     founded: 2020,
     base: 'Faenza, Italy',
-    teamPrincipal: 'Laurent Mekies',
+    teamPrincipal: 'Alan Permane',
     engine: 'Honda RBPT',
     chassis: 'VCARB 01',
     color: '#6692FF',
@@ -473,7 +473,7 @@ export const teams2025: Record<string, TeamData> = {
       coordinates: { lat: 44.2858, lng: 11.8761 }
     },
     keyPersonnel: {
-      teamPrincipal: 'Laurent Mekies',
+      teamPrincipal: 'Alan Permane',
       technicalDirector: 'Jody Egginton',
       headOfAerodynamics: 'Jean-Claude Migeot',
       chiefEngineer: 'Jonathan Eddolls'

@@ -35,7 +35,7 @@ Returns current Formula 1 teams for the 2025 season.
   "Red Bull Racing": {
     "drivers": ["Max Verstappen", "Checo Pérez"],
     "car": "RB21",
-    "principal": "Christian Horner",
+    "principal": "Laurent Mekies",
     "engine": "Honda RBPT",
     "founded": 2005,
     "championships": 6,

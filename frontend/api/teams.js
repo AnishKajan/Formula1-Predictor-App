@@ -20,7 +20,7 @@ export default function handler(req, res) {
     'Red Bull Racing': {
       drivers: ['Max Verstappen', 'Yuki Tsunoda'],
       car: 'RB21',
-      principal: 'Christian Horner',
+      principal: 'Laurent Mekies',
       engine: 'Honda RBPT',
       founded: 2005,
       championships: 6,
@@ -111,7 +111,7 @@ export default function handler(req, res) {
     'RB': {
       drivers: ['Liam Lawson', 'Isack Hadjar'],
       car: 'VCARB 01',
-      principal: 'Laurent Mekies',
+      principal: 'Alan Permane',
       engine: 'Honda RBPT',
       founded: 2020,
       championships: 0,
