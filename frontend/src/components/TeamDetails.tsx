@@ -63,10 +63,10 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 6, drivers: 8 },
       currentSeason: {
         position: 4,
-        points: 382,
-        wins: 3,
-        podiums: 8,
-        poles: 3
+        points: 192,
+        wins: 2,
+        podiums: 5,
+        poles: 4
       },
       history: 'Originally founded as Stewart Grand Prix in 1997, the team was purchased by Red Bull in 2005. Under their ownership, Red Bull Racing has become one of the most successful teams in F1 history, winning multiple championships and establishing themselves as a dominant force in the sport.',
       achievements: [
@@ -97,7 +97,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/charles-leclerc.jpg',
           championships: 0,
           wins: 8,
-          podiums: 47,
+          podiums: 48,
           debut: 2018
         },
         {
@@ -115,10 +115,10 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 16, drivers: 15 },
       currentSeason: {
         position: 2,
-        points: 470,
+        points: 248,
         wins: 4,
-        podiums: 14,
-        poles: 6
+        podiums: 4,
+        poles: 0
       },
       history: 'The oldest and most successful team in Formula 1 history. Founded by Enzo Ferrari, the Scuderia has been competing since the first F1 season in 1950. Known for their passionate fans, iconic red cars, and legendary drivers.',
       achievements: [
@@ -167,10 +167,10 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 8, drivers: 9 },
       currentSeason: {
         position: 3,
-        points: 469,
-        wins: 4,
-        podiums: 15,
-        poles: 5
+        points: 220,
+        wins: 1,
+        podiums: 6,
+        poles: 1
       },
       history: 'Mercedes returned to F1 as a constructor in 2010 and dominated the hybrid era from 2014-2021. Known for technical excellence and strategic mastery under Toto Wolff\'s leadership.',
       achievements: [
@@ -201,7 +201,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/lando-norris.jpg',
           championships: 0,
           wins: 8,
-          podiums: 36,
+          podiums: 37,
           debut: 2019
         },
         {
@@ -211,16 +211,16 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           age: 23,
           image: '/images/drivers/oscar-piastri.jpg',
           championships: 0,
-          wins: 7,
-          podiums: 20,
+          wins: 8,
+          podiums: 21,
           debut: 2023
         }
       ],
       championships: { constructors: 8, drivers: 12 },
       currentSeason: {
         position: 1,
-        points: 625,
-        wins: 10,
+        points: 516,
+        wins: 9,
         podiums: 20,
         poles: 8
       },
@@ -270,10 +270,10 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
-        position: 5,
-        points: 100,
+        position: 8,
+        points: 36,
         wins: 0,
-        podiums: 1,
+        podiums: 0,
         poles: 0
       },
       history: 'The team formerly known as Racing Point and Force India was rebranded as Aston Martin in 2021. Backed by Lawrence Stroll, the team has invested heavily in facilities and personnel.',
@@ -322,8 +322,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 2, drivers: 0 },
       currentSeason: {
-        position: 6,
-        points: 65,
+        position: 10,
+        points: 20,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -374,8 +374,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 9, drivers: 7 },
       currentSeason: {
-        position: 9,
-        points: 17,
+        position: 5,
+        points: 70,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -426,8 +426,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 1, drivers: 0 },
       currentSeason: {
-        position: 8,
-        points: 50,
+        position: 7,
+        points: 41,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -478,8 +478,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
-        position: 7,
-        points: 59,
+        position: 9,
+        points: 35,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -530,10 +530,10 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
-        position: 10,
-        points: 19,
+        position: 6,
+        points: 43,
         wins: 0,
-        podiums: 0,
+        podiums: 1,
         poles: 0
       },
       history: 'Swiss team with a long F1 history. Will become Audi\'s factory team from 2026, marking the German manufacturer\'s return to F1.',
