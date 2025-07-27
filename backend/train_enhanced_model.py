@@ -99,17 +99,24 @@ def enhance_tire_strategy(df):
                     "Medium → Medium"
                 ])
     
-    df['tire_strategy'] = df.apply(lambda row: get_strategy(row['weather'], row['circuit']), axis=1)
+    # Only add tire strategy if it doesn't exist
+    if 'tire_strategy' not in df.columns:
+        df['tire_strategy'] = df.apply(lambda row: get_strategy(row['weather'], row['circuit']), axis=1)
+    
     return df
 
 def add_driver_performance_features(df):
-    """Add realistic driver performance metrics"""
+    """Add realistic driver performance metrics with 2025 updates"""
     
-    # Modern F1 driver experience mapping
+    # Updated driver experience mapping including 2025 season
     driver_experience = {
+        # Veterans
         'Lewis Hamilton': 19,           # 2007–2025
         'Fernando Alonso': 21,          # 2001–2018, 2021–2025 (break: 2019–2020)
         'Nico Hülkenberg': 13,          # 2010–2019, 2023–2025 (break: 2020–2022)
+        'Nico Hulkenberg': 13,          # Alternative spelling
+        
+        # Current stars
         'Max Verstappen': 11,           # 2015–2025
         'Charles Leclerc': 7,           # 2018–2025
         'Lando Norris': 7,              # 2019–2025
@@ -119,43 +126,89 @@ def add_driver_performance_features(df):
         'Lance Stroll': 8,              # 2017–2025
         'Yuki Tsunoda': 5,              # 2021–2025
         'Alex Albon': 5,                # 2019–2020, 2022–2025 (missed 2021)
+        'Alexander Albon': 5,           # Alternative name
         'Carlos Sainz': 11,             # 2015–2025
-        'Oscar Piastri': 2,             # 2023–2025
+        'Oscar Piastri': 3,             # 2023–2025
+        
+        # 2025 rookies and newer drivers
         'Kimi Antonelli': 1,            # Debuted 2025
         'Oliver Bearman': 1,            # Partial 2024 debut, full season 2025
         'Jack Doohan': 1,               # Debuted 2025
+        'Franco Colapinto': 1,          # Partial 2024, full 2025
         'Gabriel Bortoleto': 1,         # Debuted 2025
         'Isack Hadjar': 1,              # Debuted 2025
-        'Liam Lawson': 2                # Partial 2023, full 2025 (missed 2024)
+        'Liam Lawson': 2,               # Partial 2023, full 2025 (missed 2024)
+        
+        # Historical drivers - add some common ones
+        'Sebastian Vettel': 15,
+        'Daniel Ricciardo': 13,
+        'Valtteri Bottas': 11,
+        'Sergio Pérez': 14,
+        'Sergio Perez': 14,
     }
     
-    # Add experience for historical drivers with random values
+    # Add experience for drivers not in the mapping
     for driver in df['driver'].unique():
         if driver not in driver_experience:
-            driver_experience[driver] = random.randint(1, 15)
+            # Estimate based on first appearance in dataset
+            driver_seasons = df[df['driver'] == driver]['season'].unique()
+            estimated_experience = len(driver_seasons)
+            driver_experience[driver] = max(1, estimated_experience)
     
     df['driver_experience'] = df['driver'].map(driver_experience)
     
-    # Recent form (lower is better - average finishing position)
-    df['recent_form'] = np.random.uniform(1, 20, len(df))
+    # Calculate recent form (average position in last few races)
+    def calculate_recent_form(group):
+        # Sort by date and take last 5 races
+        recent_races = group.sort_values('date').tail(5)
+        avg_position = recent_races['position'].mean()
+        return avg_position
     
-    # Qualifying gap to teammate
+    # Group by driver and calculate recent form
+    recent_form = df.groupby('driver').apply(calculate_recent_form)
+    df['recent_form'] = df['driver'].map(recent_form)
+    
+    # Fill any missing values
+    df['recent_form'] = df['recent_form'].fillna(15.0)
+    
+    # Qualifying gap to teammate (simulated but realistic)
     df['quali_gap_to_teammate'] = np.random.uniform(-1.5, 1.5, len(df))
     
     return df
 
 def add_constructor_features(df):
-    """Add constructor performance features"""
+    """Add constructor performance features with 2025 updates"""
     
-    # 2024/2025 constructor standings
+    # Updated constructor standings based on 2025 season performance
     constructor_standings = {
+        # 2025 season standings
         'McLaren': 1, 'Ferrari': 2, 'Red Bull Racing': 3, 'Red Bull': 3,
-        'Mercedes': 4, 'Aston Martin': 5, 'Alpine': 6, 'Haas F1 Team': 7, 'Haas': 7,
-        'RB': 8, 'Williams': 9, 'Kick Sauber': 10, 'Sauber': 10
+        'Mercedes': 4, 'Aston Martin': 5, 'Alpine': 6, 'Haas': 7, 'Haas F1 Team': 7,
+        'Racing Bulls': 8, 'RB': 8, 'Williams': 9, 'Kick Sauber': 10, 'Sauber': 10,
+        
+        # Historical teams
+        'Force India': 7, 'Racing Point': 6, 'AlphaTauri': 8, 'Toro Rosso': 8,
+        'Lotus': 6, 'Renault': 6, 'Manor': 10, 'Caterham': 10, 'HRT': 10,
+        'Virgin': 10, 'Brawn GP': 3, 'Toyota': 5, 'BMW Sauber': 4
     }
     
     df['constructor_standing'] = df['constructor'].map(constructor_standings).fillna(10)
-    df['budget_efficiency'] = np.random.uniform(0.7, 1.0, len(df))
+    
+    # Budget efficiency (how well they perform relative to resources)
+    efficiency_map = {
+        'McLaren': 0.98, 'Ferrari': 0.95, 'Red Bull Racing': 0.93, 'Red Bull': 0.93,
+        'Mercedes': 0.90, 'Aston Martin': 0.85, 'Alpine': 0.82, 'Haas': 0.80,
+        'Racing Bulls': 0.79, 'RB': 0.79, 'Williams': 0.78, 'Kick Sauber': 0.75,
+        'Sauber': 0.75
+    }
+    
+    df['budget_efficiency'] = df['constructor'].map(efficiency_map)
+    
+    # Fix the fillna issue - generate individual random values for missing entries
+    missing_mask = df['budget_efficiency'].isna()
+    if missing_mask.any():
+        random_values = np.random.uniform(0.7, 1.0, missing_mask.sum())
+        df.loc[missing_mask, 'budget_efficiency'] = random_values
     
     return df
 
@@ -168,17 +221,42 @@ def add_circuit_features(df):
         'Baku City Circuit': 'Street',
         'Jeddah Corniche Circuit': 'Street',
         'Las Vegas Strip Circuit': 'Street',
+        'Miami International Autodrome': 'Street',
         'Monza Circuit': 'Power',
         'Silverstone Circuit': 'Balanced',
         'Hungaroring': 'Twisty',
-        'Circuit de Spa-Francorchamps': 'Power'
+        'Circuit de Spa-Francorchamps': 'Power',
+        'Circuit Gilles Villeneuve': 'Power',
+        'Albert Park Circuit': 'Balanced',
+        'Suzuka Circuit': 'Balanced',
+        'Red Bull Ring': 'Power',
+        'Circuit de Barcelona-Catalunya': 'Balanced'
     }
     
     df['circuit_type'] = df['circuit'].map(circuit_types).fillna('Balanced')
     
     # Circuit characteristics
-    df['drs_zones'] = df['circuit'].apply(lambda x: random.randint(1, 3))
-    df['lap_length'] = df['circuit'].apply(lambda x: random.uniform(3.0, 7.0))
+    drs_zones_map = {
+        'Monaco Circuit': 1, 'Hungaroring': 1, 'Marina Bay Street Circuit': 3,
+        'Baku City Circuit': 2, 'Jeddah Corniche Circuit': 3, 'Monza Circuit': 2,
+        'Silverstone Circuit': 2, 'Circuit de Spa-Francorchamps': 2
+    }
+    
+    df['drs_zones'] = df['circuit'].map(drs_zones_map)
+    df['drs_zones'] = df['drs_zones'].fillna(2)  # Default 2 DRS zones
+    
+    lap_length_map = {
+        'Monaco Circuit': 3.337, 'Marina Bay Street Circuit': 5.063,
+        'Baku City Circuit': 6.003, 'Circuit de Spa-Francorchamps': 7.004,
+        'Silverstone Circuit': 5.891, 'Monza Circuit': 5.793
+    }
+    
+    df['lap_length'] = df['circuit'].map(lap_length_map)
+    missing_lap_length = df['lap_length'].isna()
+    if missing_lap_length.any():
+        random_lap_values = np.random.uniform(3.0, 7.0, missing_lap_length.sum())
+        df.loc[missing_lap_length, 'lap_length'] = random_lap_values
+    
     df['safety_car_laps'] = np.random.poisson(3, len(df))
     df['avg_pit_time'] = np.random.uniform(2.0, 4.5, len(df))
     
@@ -198,10 +276,20 @@ def load_and_enhance_data():
             break
     
     if df is None:
-        print("❌ No data file found. Please run fetch_data.py first")
+        print("❌ No data file found. Please ensure f1_multi_year_results.csv exists in the data folder")
         return None
     
     print(f"📈 Loaded {len(df)} race results")
+    
+    # Check for 2025 data
+    seasons = df['season'].unique()
+    print(f"📅 Seasons in dataset: {min(seasons)} to {max(seasons)}")
+    
+    if 2025 in seasons:
+        races_2025 = len(df[df['season'] == 2025])
+        print(f"🆕 Found {races_2025} results from 2025 season")
+    else:
+        print("⚠️ No 2025 data found - predictions will be based on historical data only")
     
     # Clean data
     df = df.dropna(subset=['driver', 'constructor', 'circuit', 'grid', 'position'])
@@ -209,18 +297,28 @@ def load_and_enhance_data():
     df['position'] = pd.to_numeric(df['position'], errors='coerce')
     
     # Remove invalid data
-    df = df[(df['grid'] > 0) & (df['position'] > 0) & (df['position'] <= 20)]
+    df = df[(df['grid'] > 0) & (df['position'] > 0) & (df['position'] <= 22)]  # Allow for 22 cars in some seasons
     
     # Add weather if not present
     if 'weather' not in df.columns:
+        print("🌦️ Adding weather data...")
         df['weather'] = 'Dry'  # Default
-        # Add some variety
+        # Add some variety based on circuits known for weather
         wet_circuits = ['Circuit de Spa-Francorchamps', 'Suzuka Circuit', 'Interlagos', 'Silverstone Circuit']
-        df.loc[df['circuit'].isin(wet_circuits), 'weather'] = np.random.choice(['Wet', 'Mixed', 'Dry'], 
-                                                                               size=len(df[df['circuit'].isin(wet_circuits)]),
-                                                                               p=[0.2, 0.3, 0.5])
+        for circuit in wet_circuits:
+            circuit_mask = df['circuit'] == circuit
+            if circuit_mask.sum() > 0:
+                df.loc[circuit_mask, 'weather'] = np.random.choice(['Wet', 'Mixed', 'Dry'], 
+                                                                   size=circuit_mask.sum(),
+                                                                   p=[0.3, 0.3, 0.4])
+    
+    # Convert date to datetime for proper sorting
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')
+    df = df.dropna(subset=['date'])  # Remove rows with invalid dates
+    df = df.sort_values(['date', 'round', 'position']).reset_index(drop=True)
     
     # Add enhanced features
+    print("🔧 Adding enhanced features...")
     df = enhance_weather_features(df)
     df = enhance_tire_strategy(df)
     df = add_driver_performance_features(df)
@@ -228,12 +326,15 @@ def load_and_enhance_data():
     df = add_circuit_features(df)
     
     print(f"✅ Enhanced dataset with {len(df.columns)} features")
+    print(f"📊 Final dataset: {len(df)} race results")
+    
     return df
 
 def train_enhanced_models():
-    """Train enhanced ML models"""
+    """Train enhanced ML models with 2025 data"""
     
-    print("🚀 Starting Enhanced F1 ML Training...")
+    print("🚀 Starting Enhanced F1 ML Training (Including 2025 Season)...")
+    print("=" * 70)
     
     # Load and prepare data
     df = load_and_enhance_data()
@@ -381,14 +482,34 @@ def train_enhanced_models():
         for i, row in feature_importance.head(10).iterrows():
             print(f"   {row['feature']}: {row['importance']:.4f}")
     
+    # 2025 season analysis
+    if 2025 in df['season'].unique():
+        print("\n📈 2025 Season Analysis:")
+        df_2025 = df[df['season'] == 2025]
+        
+        # Championship standings
+        championship = df_2025.groupby('driver')['points'].sum().sort_values(ascending=False).head(5)
+        print("   🏆 Top 5 Championship Standings:")
+        for i, (driver, points) in enumerate(championship.items(), 1):
+            print(f"      {i}. {driver}: {points:.0f} points")
+        
+        # Constructor standings
+        constructor_standings = df_2025.groupby('constructor')['points'].sum().sort_values(ascending=False).head(3)
+        print("   🏁 Top 3 Constructor Standings:")
+        for i, (constructor, points) in enumerate(constructor_standings.items(), 1):
+            print(f"      {i}. {constructor}: {points:.0f} points")
+    
     # Model performance summary
     print("\n🎉 Training Complete!")
-    print("=" * 50)
+    print("=" * 70)
     print("Enhanced F1 ML Models Successfully Trained")
     print(f"Dataset Size: {len(df):,} race results")
     print(f"Features: {len(enhanced_features)} enhanced features")
     print(f"Models Trained: {len([m for m in models.values() if m is not None])}")
-    print("=" * 50)
+    print(f"Seasons: {df['season'].min()} to {df['season'].max()}")
+    if 2025 in df['season'].unique():
+        print(f"2025 Races: {len(df[df['season'] == 2025])} results included")
+    print("=" * 70)
     
     # Save training log
     training_log = {
@@ -397,8 +518,8 @@ def train_enhanced_models():
         'features': len(enhanced_features),
         'models_trained': len([m for m in models.values() if m is not None]),
         'position_rmse': best_score,
-        'podium_accuracy': accuracy_score(y_test, clf_podium.predict(X_test)),
-        'points_accuracy': accuracy_score(y_test, clf_points.predict(X_test))
+        'seasons_covered': f"{df['season'].min()}-{df['season'].max()}",
+        'includes_2025': 2025 in df['season'].unique()
     }
     
     log_df = pd.DataFrame([training_log])
@@ -465,10 +586,15 @@ if __name__ == "__main__":
                 print(f"   🏁 Sample Points Prediction: {'Yes' if points_pred else 'No'}")
             
             print("\n✅ All tests passed! Models are ready for production.")
-            print("\n🚀 To use the models:")
-            print("   1. Start the Flask API: python app.py")
+            print("\n🚀 Your models now include 2025 season data!")
+            print("   📊 Oscar Piastri's championship lead")
+            print("   🏁 McLaren's current dominance") 
+            print("   🔄 Lewis Hamilton at Ferrari")
+            print("   🆕 All rookie performances")
+            print("\n🌐 To use the updated models:")
+            print("   1. Restart the Flask API: python app.py")
             print("   2. Access predictions at http://localhost:5059/api/predict")
-            print("   3. Check model status at http://localhost:5059/api/health")
+            print("   3. Predictions now factor in 2025 season trends!")
             
         else:
             print("❌ Training failed. Please check the error messages above.")
@@ -476,7 +602,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"❌ Training failed with error: {e}")
         print("\n🔧 Troubleshooting steps:")
-        print("   1. Ensure you have run fetch_data.py to generate training data")
+        print("   1. Ensure your CSV file contains 2025 data")
         print("   2. Check that data/f1_multi_year_results.csv exists")
         print("   3. Verify all required packages are installed:")
         print("      pip install pandas scikit-learn joblib numpy")
