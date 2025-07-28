@@ -5,7 +5,7 @@
 [![React](https://img.shields.io/badge/React-18+-61dafb.svg)](https://reactjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9+-3178c6.svg)](https://typescriptlang.org)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
-[![Flask](https://img.shields.io/badge/Flask-2.3+-000000.svg)](https://flask.palletsprojects.com)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688.svg)](https://fastapi.tiangolo.com)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-F7931E.svg)](https://scikit-learn.org)
 [![License](https://img.shields.io/badge/License-Educational-green.svg)](LICENSE)
 
@@ -19,7 +19,7 @@ F1 Race Predictor is a comprehensive machine learning application that predicts 
 ### ✨ Key Features
 
 - 🧠 **Advanced ML Training**: Python-based model training with scikit-learn, pandas, and numpy
-- 🚀 **Optimized Deployment**: JavaScript-based predictions for fast, serverless deployment
+- 🚀 **Modern API**: FastAPI with automatic documentation and async support
 - 🌦️ **Weather Integration**: Dry, wet, and mixed conditions modeling
 - 🏎️ **Interactive Grid Setup**: Configure starting positions and pit lane starts
 - 📊 **Real-time Results**: Live prediction updates with win probabilities
@@ -41,7 +41,7 @@ graph TD
     B --> D[Insights & Patterns]
     D --> E[JavaScript Prediction Logic]
     E --> F[Vercel Serverless Deployment]
-    C --> G[Local Flask API]
+    C --> G[Local FastAPI]
     F --> H[Production App]
     G --> I[Development/Testing]
 ```
@@ -54,6 +54,7 @@ graph TD
 - **pandas** for data manipulation and analysis
 - **scikit-learn** for machine learning algorithms
 - **numpy** for numerical computations
+- **FastAPI** for modern API development with automatic docs
 - **Trained Models**: Position regression, win probability, podium prediction
 - **Output**: `.pkl` files with trained models + insights
 
@@ -78,7 +79,7 @@ graph TD
 # Training workflow
 cd backend
 python train_enhanced_model.py  # Train models on historical data
-python app.py                   # Test with Flask API
+uvicorn main:app --reload        # Test with FastAPI
 ```
 
 **Training Features**:
@@ -144,7 +145,7 @@ python train_enhanced_model.py    # Train ML models
 # - Podium prediction (Accuracy: ~78%)
 
 # 3. Local Testing
-python app.py                     # Flask API with .pkl models
+uvicorn main:app --reload         # FastAPI with .pkl models at localhost:8000
 ```
 
 ### **Phase 2: Insights Translation**
@@ -231,19 +232,20 @@ python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # 2. Install ML dependencies
-pip install pandas scikit-learn joblib numpy flask flask-cors requests
+pip install fastapi uvicorn pandas scikit-learn joblib numpy requests python-dotenv
 
 # 3. Train models with latest data
 python train_enhanced_model.py
 
 # 4. Test locally (optional)
-python app.py  # Flask API at localhost:5059
+uvicorn main:app --reload  # FastAPI at localhost:8000
 ```
 
 **Access URLs:**
 - **Production**: https://formula1-predictor-app.vercel.app/
 - **Local Development**: http://localhost:3000
-- **ML Training API**: http://localhost:5059 (if running Flask)
+- **ML Training API**: http://localhost:8000 (if running FastAPI)
+- **API Documentation**: http://localhost:8000/docs (FastAPI auto-generated)
 
 ## 📁 Project Structure
 
@@ -255,7 +257,7 @@ F1-RACE-PREDICTOR/
 │
 ├── 🔧 backend/                     # ML Training Environment
 │   ├── 🧠 train_enhanced_model.py  # Primary ML training script
-│   ├── 🌐 app.py                   # Flask API (development/testing)
+│   ├── 🌐 main.py                  # FastAPI app (development/testing)
 │   ├── 📊 fetch_data.py            # Data fetching utilities
 │   ├── 🔮 predict.py               # CLI prediction tool
 │   ├── 📁 data/                    # Training datasets
@@ -392,6 +394,17 @@ Both systems incorporate current season realities:
 | `/api/driver-stats` | GET | Historical driver statistics | JavaScript |
 | `/api/constructor-standings` | GET | Championship standings | JavaScript |
 
+### **FastAPI Development Endpoints**
+
+When running the FastAPI development server locally:
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/docs` | GET | Interactive API documentation (Swagger UI) |
+| `/redoc` | GET | Alternative API documentation (ReDoc) |
+| `/api/health` | GET | Health check endpoint |
+| `/api/model-info` | GET | ML model information and status |
+
 ### **Example API Usage**
 
 ```javascript
@@ -442,7 +455,7 @@ python -m venv venv
 source venv/bin/activate
 
 # 2. Install ML dependencies
-pip install pandas scikit-learn joblib numpy flask flask-cors requests
+pip install fastapi uvicorn[standard] pandas scikit-learn joblib numpy requests python-dotenv pydantic
 
 # 3. Update training data (optional)
 python fetch_data.py  # Fetches latest F1 data
@@ -455,7 +468,8 @@ python train_enhanced_model.py
 # 🎯 Position RMSE: 2.3, Podium Accuracy: 78%
 
 # 5. Test models locally (optional)
-python app.py  # Flask API at localhost:5059
+uvicorn main:app --reload  # FastAPI at localhost:8000
+# API docs available at: http://localhost:8000/docs
 ```
 
 ### **Frontend Development**
@@ -480,8 +494,9 @@ npx vercel --prod
 **For ML Training Updates**:
 1. Modify `train_enhanced_model.py` with new features
 2. Retrain models: `python train_enhanced_model.py`
-3. Analyze model insights and translate to JavaScript logic
-4. Update `/api/predict.js` with new algorithms
+3. Test with FastAPI: `uvicorn main:app --reload`
+4. Analyze model insights and translate to JavaScript logic
+5. Update `/api/predict.js` with new algorithms
 
 **For Frontend Updates**:
 1. Add components in `src/components/`
@@ -499,15 +514,16 @@ npm run build && npx vercel --prod
 ✅ **Pros**: Fast, scalable, cost-effective
 ❌ **Cons**: Predictions based on ML insights, not live models
 
-### **Option 2: Hybrid with Python ML API**
+### **Option 2: Hybrid with Python FastAPI**
 ```bash
 # Deploy frontend to Vercel
 npx vercel --prod
 
-# Deploy Python API to Railway/Render
+# Deploy FastAPI to Railway/Render/Heroku
 railway up  # or render deploy
+# or: git push heroku main
 ```
-✅ **Pros**: True ML predictions, higher accuracy
+✅ **Pros**: True ML predictions, higher accuracy, automatic API docs
 ❌ **Cons**: More complex, higher costs, slower responses
 
 ### **Environment Variables**
@@ -516,8 +532,8 @@ railway up  # or render deploy
 NEXT_PUBLIC_API_URL=https://your-api-url.com
 
 # Python Backend (.env)
-FLASK_ENV=production
-FLASK_DEBUG=False
+ENVIRONMENT=production
+DEBUG=False
 CORS_ORIGINS=https://your-frontend-url.com
 ```
 
@@ -547,6 +563,13 @@ CORS_ORIGINS=https://your-frontend-url.com
 
 ## 🛠️ Recent Updates
 
+### **v2.3.0 - FastAPI Migration**
+- ✅ Migrated from Flask to FastAPI for modern async API
+- ✅ Added automatic API documentation with Swagger UI
+- ✅ Implemented Pydantic models for request/response validation
+- ✅ Enhanced error handling and HTTP exception management
+- ✅ Improved performance with async endpoint support
+
 ### **v2.2.0 - ML Training Integration**
 - ✅ Added comprehensive ML training pipeline with Python
 - ✅ Integrated 2025 season data (up to Belgian GP July 27)
@@ -573,7 +596,7 @@ CORS_ORIGINS=https://your-frontend-url.com
 - Fantasy team persistence needs backend integration
 - Some team logos may need CDN optimization
 - ML training requires manual data updates for new races
-- Python Flask API is for development only (not production-ready)
+- Python FastAPI is for development only (not production-ready for ML models)
 
 ## 🚀 Future Roadmap
 
@@ -601,6 +624,7 @@ CORS_ORIGINS=https://your-frontend-url.com
 - **TypeScript**: Use strict typing for all components
 - **React**: Functional components with hooks
 - **Python**: Follow PEP 8 standards for ML code
+- **FastAPI**: Use async endpoints and Pydantic models
 - **ML Training**: Document all feature engineering decisions
 - **API Design**: Maintain compatibility between training and production
 - **Testing**: Add tests for both ML and JavaScript predictions
@@ -621,6 +645,12 @@ CORS_ORIGINS=https://your-frontend-url.com
 - **Global CDN**: <200ms worldwide
 - **Uptime**: 99.9% (Vercel infrastructure)
 - **Concurrent Users**: Unlimited (serverless auto-scaling)
+
+### **FastAPI Development Performance**
+- **API Documentation**: Auto-generated at `/docs` and `/redoc`
+- **Request Validation**: Automatic with Pydantic models
+- **Async Support**: Non-blocking request handling
+- **Error Handling**: Comprehensive HTTP exception management
 
 ## 📄 Legal & Licensing
 
@@ -652,6 +682,7 @@ This is an independent fan project and is not affiliated with, endorsed by, or c
 - **Formula 1** for the incredible sport that inspired this project
 - **Ergast F1 API** for comprehensive historical racing data
 - **scikit-learn Community** for excellent machine learning tools
+- **FastAPI** for modern, fast API development with automatic documentation
 - **React & TypeScript** communities for modern web development
 - **Vercel** for seamless deployment and serverless infrastructure
 - **All F1 fans** who make this sport amazing
@@ -659,7 +690,8 @@ This is an independent fan project and is not affiliated with, endorsed by, or c
 ### **Technical Acknowledgments**
 - **pandas** for powerful data manipulation capabilities
 - **numpy** for efficient numerical computations
-- **Flask** for rapid API prototyping and development
+- **FastAPI & Uvicorn** for high-performance async API development
+- **Pydantic** for data validation and settings management
 - **Random Forest & Gradient Boosting** algorithms for robust predictions
 
 ## 📞 Support & Contact
@@ -670,7 +702,7 @@ This is an independent fan project and is not affiliated with, endorsed by, or c
 
 ### **For Developers**
 - 🤖 **ML Questions**: Issues tagged with `machine-learning`
-- 🌐 **API Questions**: Issues tagged with `api`
+- 🌐 **API Questions**: Issues tagged with `api` or `fastapi`
 - ⚛️ **Frontend Questions**: Issues tagged with `frontend`
 - 📊 **Data Questions**: Issues tagged with `data`
 

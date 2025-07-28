@@ -592,7 +592,7 @@ if __name__ == "__main__":
             print("   🔄 Lewis Hamilton at Ferrari")
             print("   🆕 All rookie performances")
             print("\n🌐 To use the updated models:")
-            print("   1. Restart the Flask API: python app.py")
+            print("   1. Restart the FastAPI API: python app.py")
             print("   2. Access predictions at http://localhost:5059/api/predict")
             print("   3. Predictions now factor in 2025 season trends!")
             

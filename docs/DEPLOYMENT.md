@@ -1,6 +1,6 @@
 # 🚀 F1 Race Predictor Deployment Guide
 
-This guide covers deploying the F1 Race Predictor to various cloud platforms and production environments.
+This guide covers deploying the F1 Race Predictor with FastAPI backend to Vercel and other cloud platforms.
 
 ---
 
@@ -8,7 +8,7 @@ This guide covers deploying the F1 Race Predictor to various cloud platforms and
 
 - Completed local development setup
 - Git repository with your code
-- Cloud platform account (Heroku, Railway, Vercel, etc.)
+- Vercel account (primary deployment target)
 - Domain name (optional)
 
 ---
@@ -21,11 +21,11 @@ Create production environment files:
 
 #### Backend (`.env`)
 ```bash
-# Production Flask Configuration
-FLASK_ENV=production
-FLASK_DEBUG=False
-FLASK_HOST=0.0.0.0
-FLASK_PORT=5000
+# Production FastAPI Configuration
+ENVIRONMENT=production
+DEBUG=False
+HOST=0.0.0.0
+PORT=8000
 
 # Database (if using)
 DATABASE_URL=postgresql://user:pass@host:port/db
@@ -43,250 +43,182 @@ SECRET_KEY=your-super-secret-key-here
 
 #### Frontend (`.env.production`)
 ```bash
-REACT_APP_API_URL=https://your-backend-domain.com
-REACT_APP_TITLE=F1 Race Predictor
-GENERATE_SOURCEMAP=false
-PORT=3009
+NEXT_PUBLIC_API_URL=https://your-backend-domain.vercel.app
+NEXT_PUBLIC_TITLE=F1 Race Predictor
+PORT=3000
 ```
 
 ---
 
-## 🐍 Backend Deployment
+## 🚀 Primary Deployment: Vercel (Recommended)
 
-### Option 1: Heroku
+Vercel is the primary and recommended deployment platform for this project, supporting both frontend and backend.
 
-#### 1. Prepare for Heroku
-```bash
-# Install Heroku CLI
-# Create Procfile
-echo "web: python app.py" > backend/Procfile
+### Option 1: Full Stack Vercel Deployment
 
-# Create requirements.txt if not exists
-cd backend
-pip freeze > requirements.txt
-
-# Create runtime.txt (optional)
-echo "python-3.11.0" > runtime.txt
+#### 1. Project Structure for Vercel
+```
+f1-race-predictor/
+├── api/                    # FastAPI backend (Vercel Functions)
+│   ├── main.py            # FastAPI app
+│   ├── requirements.txt   # Python dependencies
+│   └── vercel.json        # Vercel configuration
+├── frontend/              # Next.js/React frontend
+│   ├── package.json
+│   ├── next.config.js
+│   └── ...
+└── vercel.json           # Root Vercel configuration
 ```
 
-#### 2. Deploy to Heroku
-```bash
-# Login to Heroku
-heroku login
+#### 2. Vercel Configuration
 
-# Create Heroku app
-heroku create f1-predictor-api
-
-# Set environment variables
-heroku config:set FLASK_ENV=production
-heroku config:set FLASK_DEBUG=False
-
-# Deploy backend
-git subtree push --prefix backend heroku main
-
-# Scale the app
-heroku ps:scale web=1
-```
-
-#### 3. Heroku Configuration Files
-
-**backend/Procfile**
-```
-web: python app.py
-```
-
-**backend/runtime.txt**
-```
-python-3.11.0
-```
-
-**backend/app.py** (update for Heroku)
-```python
-import os
-from flask import Flask
-
-app = Flask(__name__)
-
-# ... your existing code ...
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)
-```
-
-### Option 2: Railway
-
-#### 1. Railway Deployment
-```bash
-# Install Railway CLI
-npm install -g @railway/cli
-
-# Login to Railway
-railway login
-
-# Initialize project
-railway init
-
-# Deploy
-railway up
-```
-
-#### 2. Railway Configuration
-
-**railway.json**
-```json
-{
-  "deploy": {
-    "startCommand": "python app.py",
-    "healthcheckPath": "/api/teams"
-  }
-}
-```
-
-### Option 3: DigitalOcean App Platform
-
-#### 1. App Specification
-
-**backend/.do/app.yaml**
-```yaml
-name: f1-predictor-backend
-services:
-- name: api
-  source_dir: /backend
-  github:
-    repo: yourusername/f1-race-predictor
-    branch: main
-  run_command: python app.py
-  environment_slug: python
-  instance_count: 1
-  instance_size_slug: basic-xxs
-  envs:
-  - key: FLASK_ENV
-    value: production
-  - key: FLASK_DEBUG
-    value: "False"
-  http_port: 5000
-```
-
-### Option 4: AWS EC2
-
-#### 1. EC2 Setup Script
-```bash
-#!/bin/bash
-# setup_ec2.sh
-
-# Update system
-sudo yum update -y
-
-# Install Python 3.9
-sudo yum install python3 python3-pip -y
-
-# Install git
-sudo yum install git -y
-
-# Clone repository
-git clone https://github.com/yourusername/f1-race-predictor.git
-cd f1-race-predictor/backend
-
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Install nginx
-sudo yum install nginx -y
-
-# Start services
-sudo systemctl start nginx
-sudo systemctl enable nginx
-```
-
-#### 2. Nginx Configuration
-```nginx
-# /etc/nginx/sites-available/f1-predictor
-server {
-    listen 80;
-    server_name your-domain.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:5000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-#### 3. Systemd Service
-```ini
-# /etc/systemd/system/f1-predictor.service
-[Unit]
-Description=F1 Race Predictor API
-After=network.target
-
-[Service]
-User=ec2-user
-WorkingDirectory=/home/ec2-user/f1-race-predictor/backend
-Environment=PATH=/home/ec2-user/f1-race-predictor/backend/venv/bin
-ExecStart=/home/ec2-user/f1-race-predictor/backend/venv/bin/python app.py
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
----
-
-## ⚛️ Frontend Deployment
-
-### Option 1: Netlify
-
-#### 1. Build Configuration
-
-**frontend/netlify.toml**
-```toml
-[build]
-  base = "frontend/"
-  publish = "build/"
-  command = "npm run build"
-
-[build.environment]
-  REACT_APP_API_URL = "https://your-backend-domain.com"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-```
-
-#### 2. Deploy to Netlify
-```bash
-# Install Netlify CLI
-npm install -g netlify-cli
-
-# Build the app
-cd frontend
-npm run build
-
-# Deploy
-netlify deploy --prod --dir=build
-```
-
-### Option 2: Vercel
-
-#### 1. Vercel Configuration
-
-**vercel.json**
+**Root vercel.json**
 ```json
 {
   "name": "f1-race-predictor",
   "version": 2,
   "builds": [
     {
+      "src": "api/main.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    },
+    {
       "src": "frontend/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
+  ],
+  "env": {
+    "ENVIRONMENT": "production",
+    "DEBUG": "False"
+  },
+  "functions": {
+    "api/main.py": {
+      "maxDuration": 30
+    }
+  }
+}
+```
+
+**api/vercel.json**
+```json
+{
+  "functions": {
+    "main.py": {
+      "runtime": "python3.9",
+      "maxDuration": 30
+    }
+  }
+}
+```
+
+#### 3. FastAPI for Vercel Serverless
+
+**api/main.py** (Vercel-optimized)
+```python
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+import os
+
+# Your existing FastAPI app code...
+app = FastAPI(
+    title="F1 Race Predictor API",
+    description="Enhanced F1 race prediction system",
+    version="2.0"
+)
+
+# CORS for Vercel deployment
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"] if os.getenv("ENVIRONMENT") != "production" else [
+        "https://your-frontend-domain.vercel.app",
+        "https://f1-predictor.vercel.app"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Your existing endpoints...
+
+# Vercel handler
+from mangum import Mangum
+handler = Mangum(app)
+```
+
+#### 4. Deploy to Vercel
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Login to Vercel
+vercel login
+
+# Deploy (from root directory)
+vercel --prod
+
+# Set environment variables
+vercel env add CORS_ORIGINS
+vercel env add SECRET_KEY
+```
+
+### Option 2: Separate Frontend/Backend Deployment
+
+#### Backend on Vercel
+
+**api/requirements.txt**
+```txt
+fastapi==0.104.1
+uvicorn==0.24.0
+pydantic==2.5.0
+mangum==0.17.0
+pandas==2.1.0
+numpy==1.24.3
+scikit-learn==1.3.0
+joblib==1.3.2
+requests==2.31.0
+python-dotenv==1.0.0
+```
+
+**api/vercel.json**
+```json
+{
+  "builds": [
+    {
+      "src": "main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/main.py"
+    }
+  ]
+}
+```
+
+#### Frontend on Vercel
+
+**frontend/vercel.json**
+```json
+{
+  "name": "f1-predictor-frontend",
+  "builds": [
+    {
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "build"
@@ -295,79 +227,110 @@ netlify deploy --prod --dir=build
   ],
   "routes": [
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/frontend/$1"
+      "dest": "/index.html"
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://your-backend-domain.com"
-  }
-}
-```
-
-#### 2. Deploy to Vercel
-```bash
-# Install Vercel CLI
-npm install -g vercel
-
-# Deploy
-cd frontend
-vercel --prod
-```
-
-### Option 3: AWS S3 + CloudFront
-
-#### 1. Build and Upload
-```bash
-# Build the app
-cd frontend
-npm run build
-
-# Install AWS CLI
-# Configure AWS credentials
-aws configure
-
-# Create S3 bucket
-aws s3 mb s3://f1-predictor-frontend
-
-# Upload build files
-aws s3 sync build/ s3://f1-predictor-frontend --delete
-
-# Configure bucket for website hosting
-aws s3 website s3://f1-predictor-frontend --index-document index.html --error-document index.html
-```
-
-#### 2. CloudFront Distribution
-```json
-{
-  "DistributionConfig": {
-    "Origins": [
-      {
-        "Id": "S3-f1-predictor-frontend",
-        "DomainName": "f1-predictor-frontend.s3.amazonaws.com",
-        "S3OriginConfig": {
-          "OriginAccessIdentity": ""
-        }
-      }
-    ],
-    "DefaultCacheBehavior": {
-      "TargetOriginId": "S3-f1-predictor-frontend",
-      "ViewerProtocolPolicy": "redirect-to-https",
-      "Compress": true
-    },
-    "Comment": "F1 Race Predictor Frontend",
-    "Enabled": true
+    "REACT_APP_API_URL": "https://your-api-deployment.vercel.app"
   }
 }
 ```
 
 ---
 
+## 🐍 Alternative Backend Deployments
+
+### Option 1: Railway (FastAPI-friendly)
+
+#### 1. Railway Configuration
+
+**railway.toml**
+```toml
+[build]
+buildCommand = "pip install -r requirements.txt"
+
+[deploy]
+startCommand = "uvicorn main:app --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/api/health"
+restartPolicyType = "on_failure"
+
+[env]
+ENVIRONMENT = "production"
+DEBUG = "False"
+```
+
+#### 2. Deploy to Railway
+```bash
+# Install Railway CLI
+npm install -g @railway/cli
+
+# Login and deploy
+railway login
+railway init
+railway up
+```
+
+### Option 2: Render
+
+#### 1. Render Configuration
+
+**render.yaml**
+```yaml
+services:
+  - type: web
+    name: f1-predictor-api
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    plan: free
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "False"
+```
+
+### Option 3: Heroku
+
+#### 1. Heroku Configuration
+
+**Procfile**
+```
+web: uvicorn main:app --host 0.0.0.0 --port $PORT
+```
+
+**runtime.txt**
+```
+python-3.11.0
+```
+
+#### 2. Deploy to Heroku
+```bash
+# Install Heroku CLI and login
+heroku login
+
+# Create app
+heroku create f1-predictor-fastapi
+
+# Set environment variables
+heroku config:set ENVIRONMENT=production
+heroku config:set DEBUG=False
+
+# Deploy
+git push heroku main
+```
+
+---
+
 ## 🐳 Docker Deployment
 
-### Backend Dockerfile
+### FastAPI Dockerfile
 
-**backend/Dockerfile**
+**Dockerfile**
 ```dockerfile
 FROM python:3.11-slim
 
@@ -378,58 +341,31 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install Python dependencies
+# Copy requirements first for better caching
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY . .
 
-# Create models directory
+# Create necessary directories
 RUN mkdir -p models data logs
 
 # Expose port
-EXPOSE 5000
+EXPOSE 8000
 
 # Set environment variables
-ENV FLASK_ENV=production
-ENV FLASK_DEBUG=False
+ENV ENVIRONMENT=production
+ENV DEBUG=False
+ENV HOST=0.0.0.0
+ENV PORT=8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8000/api/health || exit 1
 
 # Run the application
-CMD ["python", "app.py"]
-```
-
-### Frontend Dockerfile
-
-**frontend/Dockerfile**
-```dockerfile
-# Build stage
-FROM node:16-alpine as build
-
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-RUN npm ci --only=production
-
-# Copy source code
-COPY . .
-
-# Build the app
-RUN npm run build
-
-# Production stage
-FROM nginx:alpine
-
-# Copy build files
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
 ### Docker Compose
@@ -439,25 +375,31 @@ CMD ["nginx", "-g", "daemon off;"]
 version: '3.8'
 
 services:
-  backend:
-    build: ./backend
+  fastapi-backend:
+    build: .
     ports:
-      - "5000:5000"
+      - "8000:8000"
     environment:
-      - FLASK_ENV=production
-      - FLASK_DEBUG=False
+      - ENVIRONMENT=production
+      - DEBUG=False
+      - CORS_ORIGINS=http://localhost:3000
     volumes:
-      - ./backend/data:/app/data
-      - ./backend/models:/app/models
-    
+      - ./data:/app/data
+      - ./models:/app/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   frontend:
     build: ./frontend
     ports:
-      - "3009:80"
+      - "3000:3000"
     environment:
-      - REACT_APP_API_URL=http://localhost:5061
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
     depends_on:
-      - backend
+      - fastapi-backend
 
   nginx:
     image: nginx:alpine
@@ -466,7 +408,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
-      - backend
+      - fastapi-backend
       - frontend
 ```
 
@@ -476,108 +418,166 @@ services:
 
 ### HTTPS/SSL Setup
 
-#### Let's Encrypt (Free SSL)
+#### Vercel (Automatic)
+Vercel provides automatic HTTPS for all deployments with custom domains.
+
+#### Custom SSL Setup
 ```bash
+# For custom domains on other platforms
 # Install certbot
-sudo apt-get install certbot python3-certbot-nginx
+sudo apt-get install certbot
 
 # Get certificate
-sudo certbot --nginx -d your-domain.com
+sudo certbot certonly --standalone -d your-api-domain.com
 
-# Auto-renewal
-sudo crontab -e
-# Add: 0 12 * * * /usr/bin/certbot renew --quiet
+# Update FastAPI for HTTPS
+# main.py
+import ssl
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain('/path/to/cert.pem', '/path/to/key.pem')
 ```
 
 ### Environment Security
 
-1. **Never commit secrets** to version control
-2. **Use environment variables** for all sensitive data
-3. **Enable CORS properly** for production domains
-4. **Use HTTPS** for all production traffic
-5. **Validate all inputs** on the backend
-6. **Rate limit** API endpoints
+1. **Environment Variables**: Use Vercel's environment variable management
+2. **CORS Configuration**: Restrict origins in production
+3. **Rate Limiting**: Implement with slowapi
+4. **Input Validation**: FastAPI's automatic validation with Pydantic
+5. **API Documentation**: Disable in production if needed
 
-### CORS Configuration
+### Enhanced CORS Configuration
 
-**backend/app.py**
+**main.py**
 ```python
-from flask_cors import CORS
-
-app = Flask(__name__)
+import os
+from fastapi.middleware.cors import CORSMiddleware
 
 # Production CORS
-if os.environ.get('FLASK_ENV') == 'production':
-    CORS(app, origins=['https://your-frontend-domain.com'])
+if os.getenv("ENVIRONMENT") == "production":
+    allowed_origins = [
+        "https://f1-predictor.vercel.app",
+        "https://your-custom-domain.com"
+    ]
 else:
-    CORS(app)  # Allow all origins in development
+    allowed_origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+```
+
+### Rate Limiting
+
+```python
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+@app.post("/api/predict")
+@limiter.limit("10/minute")
+async def predict_race(request: Request, data: PredictionRequest):
+    # Your prediction logic
+    pass
 ```
 
 ---
 
 ## 📊 Monitoring and Logging
 
-### Application Monitoring
+### FastAPI Built-in Monitoring
 
-#### Using Sentry
 ```python
-# backend/app.py
-import sentry_sdk
-from sentry_sdk.integrations.flask import FlaskIntegration
+from fastapi import FastAPI, Request
+import time
+import logging
 
-sentry_sdk.init(
-    dsn="your-sentry-dsn",
-    integrations=[FlaskIntegration()],
-    traces_sample_rate=1.0
-)
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    
+    logger.info(f"{request.method} {request.url.path} - {response.status_code} - {process_time:.3f}s")
+    response.headers["X-Process-Time"] = str(process_time)
+    
+    return response
 ```
 
 ### Health Checks
 
-**backend/app.py**
 ```python
-@app.route('/health')
-def health_check():
+@app.get("/api/health", tags=["monitoring"])
+async def health_check():
+    """Comprehensive health check endpoint"""
     return {
-        'status': 'healthy',
-        'timestamp': datetime.now().isoformat(),
-        'version': '1.0.0'
+        "status": "healthy",
+        "environment": os.getenv("ENVIRONMENT", "development"),
+        "version": "2.0.0",
+        "timestamp": datetime.now().isoformat(),
+        "models_loaded": models is not None,
+        "api_docs": "/docs" if os.getenv("ENVIRONMENT") != "production" else "disabled"
+    }
+
+@app.get("/api/metrics", tags=["monitoring"])
+async def get_metrics():
+    """Basic metrics endpoint"""
+    return {
+        "total_predictions": prediction_count,
+        "uptime": time.time() - start_time,
+        "memory_usage": psutil.Process().memory_info().rss / 1024 / 1024
     }
 ```
 
-### Logging Configuration
+### Sentry Integration
 
 ```python
-import logging
+import sentry_sdk
+from sentry_sdk.integrations.fastapi import FastApiIntegration
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s %(name)s %(message)s'
-)
-
-logger = logging.getLogger(__name__)
+if os.getenv("ENVIRONMENT") == "production":
+    sentry_sdk.init(
+        dsn=os.getenv("SENTRY_DSN"),
+        integrations=[FastApiIntegration(auto_enable=True)],
+        traces_sample_rate=0.1,
+        environment="production"
+    )
 ```
 
 ---
 
 ## 🚀 CI/CD Pipeline
 
-### GitHub Actions
+### GitHub Actions for Vercel
 
 **.github/workflows/deploy.yml**
 ```yaml
-name: Deploy F1 Race Predictor
+name: Deploy F1 Race Predictor to Vercel
 
 on:
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
     
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -586,116 +586,169 @@ jobs:
     
     - name: Install dependencies
       run: |
-        cd backend
         pip install -r requirements.txt
+        pip install pytest httpx
     
     - name: Run tests
       run: |
-        cd backend
-        python -m pytest tests/
-
-  deploy-backend:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
+        pytest tests/ -v
     
-    - name: Deploy to Heroku
-      uses: akhileshns/heroku-deploy@v3.12.12
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "f1-predictor-api"
-        heroku_email: "your-email@example.com"
-        appdir: "backend"
-
-  deploy-frontend:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-    
-    - name: Install and build
+    - name: Test FastAPI startup
       run: |
-        cd frontend
-        npm ci
-        npm run build
+        python -c "from main import app; print('FastAPI app loads successfully')"
+
+  deploy-preview:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     
-    - name: Deploy to Netlify
-      uses: nwtgck/actions-netlify@v2.0
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy to Vercel Preview
+      uses: amondnet/vercel-action@v25
       with:
-        publish-dir: './frontend/build'
-        production-branch: main
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        deploy-message: "Deploy from GitHub Actions"
-      env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.ORG_ID }}
+        vercel-project-id: ${{ secrets.PROJECT_ID }}
+        working-directory: ./
+
+  deploy-production:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy to Vercel Production
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.ORG_ID }}
+        vercel-project-id: ${{ secrets.PROJECT_ID }}
+        vercel-args: '--prod'
+        working-directory: ./
 ```
 
 ---
 
 ## 📈 Performance Optimization
 
-### Backend Optimization
+### FastAPI Performance
 
-1. **Caching**: Implement Redis for model caching
-2. **Database**: Use PostgreSQL for persistent data
-3. **Load Balancing**: Use multiple backend instances
-4. **CDN**: Serve static assets via CDN
+```python
+from fastapi import FastAPI
+from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 
-### Frontend Optimization
+# Add compression
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
-1. **Code Splitting**: Implement React lazy loading
-2. **Bundle Analysis**: Use webpack-bundle-analyzer
-3. **Service Workers**: Implement PWA features
-4. **Image Optimization**: Compress and optimize images
+# Force HTTPS in production
+if os.getenv("ENVIRONMENT") == "production":
+    app.add_middleware(HTTPSRedirectMiddleware)
+
+# Disable docs in production
+if os.getenv("ENVIRONMENT") == "production":
+    app = FastAPI(docs_url=None, redoc_url=None)
+```
+
+### Caching with Redis
+
+```python
+import redis
+from functools import wraps
+
+# Redis setup for caching
+redis_client = redis.Redis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379"))
+
+def cache_result(expiration: int = 300):
+    def decorator(func):
+        @wraps(func)
+        async def wrapper(*args, **kwargs):
+            cache_key = f"{func.__name__}:{hash(str(args) + str(kwargs))}"
+            
+            # Try to get from cache
+            cached_result = redis_client.get(cache_key)
+            if cached_result:
+                return json.loads(cached_result)
+            
+            # Compute and cache result
+            result = await func(*args, **kwargs)
+            redis_client.setex(cache_key, expiration, json.dumps(result))
+            
+            return result
+        return wrapper
+    return decorator
+
+@app.post("/api/predict")
+@cache_result(expiration=600)  # Cache for 10 minutes
+async def predict_race(data: PredictionRequest):
+    # Your prediction logic
+    pass
+```
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Common Issues
+### Common Vercel Issues
 
-#### Backend Issues
+#### Build Issues
 ```bash
-# Check logs
-heroku logs --tail -a f1-predictor-api
+# Check Vercel build logs
+vercel logs
 
-# Check environment variables
-heroku config -a f1-predictor-api
+# Test locally with Vercel CLI
+vercel dev
 
-# Restart app
-heroku restart -a f1-predictor-api
+# Check function timeout (max 30s on free tier)
+# Optimize model loading and prediction time
 ```
 
-#### Frontend Issues
+#### Memory Issues
 ```bash
-# Check build logs
-netlify logs
+# Vercel serverless functions have memory limits
+# Optimize model size and loading
+# Consider model quantization or compression
 
-# Test local build
-npm run build
-npx serve -s build
+# Check memory usage
+import psutil
+print(f"Memory usage: {psutil.Process().memory_info().rss / 1024 / 1024:.2f} MB")
 ```
 
 ### Debug Commands
 
 ```bash
+# Test FastAPI locally
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
 # Test API endpoints
-curl https://your-api-domain.com/api/teams
+curl https://your-vercel-deployment.vercel.app/api/health
 
-# Check SSL certificate
-openssl s_client -connect your-domain.com:443
-
-# Test CORS
+# Check CORS
 curl -H "Origin: https://your-frontend-domain.com" \
      -H "Access-Control-Request-Method: POST" \
-     https://your-api-domain.com/api/predict
+     https://your-api-domain.vercel.app/api/predict
+
+# Vercel CLI debugging
+vercel dev --debug
+```
+
+### Performance Debugging
+
+```python
+# Add timing middleware for debugging
+@app.middleware("http")
+async def add_timing_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(f"{process_time:.3f}")
+    return response
 ```
 
 ---
@@ -703,38 +756,51 @@ curl -H "Origin: https://your-frontend-domain.com" \
 ## 📝 Deployment Checklist
 
 ### Pre-Deployment
+- [ ] FastAPI app tested locally
 - [ ] All tests passing
-- [ ] Environment variables configured
-- [ ] CORS settings updated
-- [ ] SSL certificates ready
-- [ ] Domain DNS configured
+- [ ] Requirements.txt updated with FastAPI dependencies
+- [ ] Environment variables configured in Vercel
+- [ ] CORS settings updated for production domains
+- [ ] API documentation reviewed (disabled in production if needed)
+
+### Vercel Deployment
+- [ ] vercel.json configured correctly
+- [ ] Build and function settings optimized
+- [ ] Environment variables set in Vercel dashboard
+- [ ] Custom domain configured (if applicable)
+- [ ] SSL certificate automatically provisioned
 
 ### Post-Deployment
-- [ ] Health checks passing
-- [ ] API endpoints responding
-- [ ] Frontend loading correctly
-- [ ] HTTPS redirects working
-- [ ] Monitoring configured
-- [ ] Backups scheduled
+- [ ] Health checks passing at `/api/health`
+- [ ] API endpoints responding correctly
+- [ ] Frontend successfully connecting to API
+- [ ] CORS working for frontend domain
+- [ ] Performance monitoring active
+- [ ] Error tracking configured (Sentry)
 
 ---
 
 ## 🎯 Production URLs
 
-After deployment, update these in your documentation:
+Current Vercel deployment:
 
-- **Frontend**: https://f1-predictor.netlify.app
-- **Backend API**: https://f1-predictor-api.herokuapp.com
-- **Health Check**: https://f1-predictor-api.herokuapp.com/health
-- **API Docs**: https://f1-predictor-api.herokuapp.com/api/teams
+- **Frontend**: https://f1-predictor.vercel.app
+- **Backend API**: https://f1-predictor-api.vercel.app
+- **Health Check**: https://f1-predictor-api.vercel.app/api/health
+- **API Documentation**: https://f1-predictor-api.vercel.app/docs (dev only)
 
 ---
 
 ## 📞 Support
 
 For deployment issues:
-1. Check platform-specific documentation
-2. Review logs for error messages
-3. Verify environment variables
-4. Test locally first
-5. Contact platform support if needed
+1. Check Vercel deployment logs in dashboard
+2. Review FastAPI error messages in function logs
+3. Test locally with `vercel dev`
+4. Check environment variables configuration
+5. Contact Vercel support for platform-specific issues
+
+### Useful Resources
+- [Vercel Python Runtime](https://vercel.com/docs/functions/serverless-functions/runtimes/python)
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [Vercel CLI Documentation](https://vercel.com/docs/cli)
