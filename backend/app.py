@@ -1,14 +1,74 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import List, Dict, Any, Optional
 import joblib
 import numpy as np
 import pandas as pd
 import random
 from datetime import datetime
 import os
+import uvicorn
 
-app = Flask(__name__)
-CORS(app)
+app = FastAPI(
+    title="F1 Race Predictor API",
+    description="Enhanced F1 race prediction system with ML models",
+    version="2.0",
+    docs_url="/docs",
+    redoc_url="/redoc"
+)
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Pydantic models for request/response validation
+class RaceEntry(BaseModel):
+    driver: str
+    constructor: str
+    grid: int
+
+class PredictionRequest(BaseModel):
+    circuit: str
+    weather: str
+    entries: List[RaceEntry]
+
+class FantasyTeam(BaseModel):
+    drivers: List[str]
+    constructor: str
+
+class FantasyTeamRequest(BaseModel):
+    team: FantasyTeam
+    budget: Optional[int] = 100
+
+class PredictionResponse(BaseModel):
+    driver: str
+    constructor: str
+    grid: int
+    predicted_position: int
+    podium_chance: bool
+    points_chance: bool
+    points_earned: int
+    win_probability: float
+    tire_strategy: str
+
+class RaceInfo(BaseModel):
+    circuit: str
+    weather: str
+    temperature: float
+    track_temp: float
+    humidity: float
+    wind_speed: float
+
+class PredictionResult(BaseModel):
+    success: bool
+    predictions: List[PredictionResponse]
+    race_info: RaceInfo
 
 # Load enhanced models
 try:
@@ -32,7 +92,7 @@ current_teams = {
     "Red Bull Racing": {
         "drivers": ["Max Verstappen", "Yuki Tsunoda"],
         "car": "RB21",
-        "principal": "Laurent Mekies",
+        "principal": "Laurent Mekies",
         "engine": "Honda RBPT",
         "founded": 2005,
         "championships": 6,
@@ -109,7 +169,7 @@ current_teams = {
     "RB": {
         "drivers": ["Liam Lawson", "Isack Hadjar"],
         "car": "VCARB 01",
-        "principal": "Alan Permane",
+        "principal": "Alan Permane",
         "engine": "Honda RBPT",
         "founded": 2020,
         "championships": 0,
@@ -568,36 +628,67 @@ def get_points_for_position(position):
     }
     return points_system.get(position, 0)
 
-@app.route('/api/teams', methods=['GET'])
-def get_teams():
-    return jsonify(current_teams)
+def log_prediction(request_data, predictions, temp, track_temp):
+    """Log predictions for model improvement"""
+    try:
+        os.makedirs("logs", exist_ok=True)
+        
+        log_entry = {
+            'timestamp': datetime.now().isoformat(),
+            'circuit': request_data.circuit,
+            'weather': request_data.weather,
+            'temperature': temp,
+            'track_temp': track_temp,
+            'num_entries': len(request_data.entries),
+            'winner_prediction': predictions[0]['driver'] if predictions else 'N/A',
+            'winner_probability': predictions[0]['win_probability'] if predictions else 0
+        }
+        
+        log_df = pd.DataFrame([log_entry])
+        log_file = "logs/prediction_log.csv"
+        
+        if os.path.exists(log_file):
+            log_df.to_csv(log_file, mode='a', header=False, index=False)
+        else:
+            log_df.to_csv(log_file, index=False)
+            
+    except Exception as e:
+        print(f"Logging error: {e}")
 
-@app.route('/api/circuits', methods=['GET'])
-def get_circuits():
-    return jsonify(circuits_2025)
+# API Endpoints
 
-@app.route('/api/predict', methods=['POST'])
-def predict_race():
+@app.get("/api/teams", response_model=Dict[str, Any])
+async def get_teams():
+    """Get all F1 teams and their information"""
+    return current_teams
+
+@app.get("/api/circuits", response_model=List[Dict[str, Any]])
+async def get_circuits():
+    """Get all F1 circuits for the 2025 season"""
+    return circuits_2025
+
+@app.post("/api/predict", response_model=PredictionResult)
+async def predict_race(data: PredictionRequest):
+    """Predict race results based on grid, weather, and circuit conditions"""
     if not models:
-        return jsonify({"error": "Models not loaded. Please run train_enhanced_model.py first"}), 500
+        raise HTTPException(status_code=500, detail="Models not loaded. Please run train_enhanced_model.py first")
     
     try:
-        data = request.json
         predictions = []
         
         # Get race conditions
-        circuit = data['circuit']
-        weather = data['weather']
+        circuit = data.circuit
+        weather = data.weather
         temp, humidity, wind, track_temp = get_weather_features(circuit, weather)
         circuit_features = get_circuit_features(circuit)
         
         # Store win probabilities for normalization
         all_win_probs = []
         
-        for entry in data['entries']:
-            driver = entry['driver']
-            constructor = entry['constructor']
-            grid = entry['grid']
+        for entry in data.entries:
+            driver = entry.driver
+            constructor = entry.constructor
+            grid = entry.grid
             
             try:
                 # Get enhanced features
@@ -740,142 +831,118 @@ def predict_race():
         # Log prediction for analysis
         log_prediction(data, predictions, temp, track_temp)
         
-        return jsonify({
-            'success': True,
-            'predictions': predictions,
-            'race_info': {
-                'circuit': circuit,
-                'weather': weather,
-                'temperature': temp,
-                'track_temp': track_temp,
-                'humidity': humidity,
-                'wind_speed': wind
-            }
-        })
+        # Convert to Pydantic models
+        prediction_responses = [PredictionResponse(**pred) for pred in predictions]
+        race_info = RaceInfo(
+            circuit=circuit,
+            weather=weather,
+            temperature=temp,
+            track_temp=track_temp,
+            humidity=humidity,
+            wind_speed=wind
+        )
+        
+        return PredictionResult(
+            success=True,
+            predictions=prediction_responses,
+            race_info=race_info
+        )
         
     except Exception as e:
         print(f"Prediction error: {e}")
-        return jsonify({'error': str(e)}), 500
+        raise HTTPException(status_code=500, detail=str(e))
 
-def log_prediction(request_data, predictions, temp, track_temp):
-    """Log predictions for model improvement"""
-    try:
-        os.makedirs("logs", exist_ok=True)
-        
-        log_entry = {
-            'timestamp': datetime.now().isoformat(),
-            'circuit': request_data['circuit'],
-            'weather': request_data['weather'],
-            'temperature': temp,
-            'track_temp': track_temp,
-            'num_entries': len(request_data['entries']),
-            'winner_prediction': predictions[0]['driver'] if predictions else 'N/A',
-            'winner_probability': predictions[0]['win_probability'] if predictions else 0
-        }
-        
-        log_df = pd.DataFrame([log_entry])
-        log_file = "logs/prediction_log.csv"
-        
-        if os.path.exists(log_file):
-            log_df.to_csv(log_file, mode='a', header=False, index=False)
-        else:
-            log_df.to_csv(log_file, index=False)
-            
-    except Exception as e:
-        print(f"Logging error: {e}")
-
-@app.route('/api/driver-stats', methods=['GET'])
-def get_driver_stats():
+@app.get("/api/driver-stats", response_model=Dict[str, Any])
+async def get_driver_stats():
     """Get comprehensive driver statistics"""
     
     driver_stats = {
-    'Max Verstappen': {
-        'wins': 65, 'podiums': 117, 'poles': 44, 'championships': 4,
-        'debut': 2015, 'age': 27, 'country': '🇳🇱', 'image': '/images/drivers/max-verstappen.jpg'
-    },
-    'Lewis Hamilton': {
-        'wins': 105, 'podiums': 202, 'poles': 104, 'championships': 7,
-        'debut': 2007, 'age': 40, 'country': '🇬🇧', 'image': '/images/drivers/lewis-hamilton.jpg'
-    },
-    'Charles Leclerc': {
-        'wins': 8, 'podiums': 47, 'poles': 26, 'championships': 0,
-        'debut': 2018, 'age': 27, 'country': '🇲🇨', 'image': '/images/drivers/charles-leclerc.jpg'
-    },
-    'Lando Norris': {
-        'wins': 8, 'podiums': 36, 'poles': 12, 'championships': 0,
-        'debut': 2019, 'age': 25, 'country': '🇬🇧', 'image': '/images/drivers/lando-norris.jpg'
-    },
-    'George Russell': {
-        'wins': 4, 'podiums': 20, 'poles': 6, 'championships': 0,
-        'debut': 2019, 'age': 27, 'country': '🇬🇧', 'image': '/images/drivers/george-russell.jpg'
-    },
-    'Fernando Alonso': {
-        'wins': 32, 'podiums': 106, 'poles': 22, 'championships': 2,
-        'debut': 2001, 'age': 43, 'country': '🇪🇸', 'image': '/images/drivers/fernando-alonso.jpg'
-    },
-    'Oscar Piastri': {
-        'wins': 7, 'podiums': 20, 'poles': 4, 'championships': 0,
-        'debut': 2023, 'age': 23, 'country': '🇦🇺', 'image': '/images/drivers/oscar-piastri.jpg'
-    },
-    'Carlos Sainz': {
-        'wins': 4, 'podiums': 27, 'poles': 6, 'championships': 0,
-        'debut': 2015, 'age': 30, 'country': '🇪🇸', 'image': '/images/drivers/carlos-sainz.jpg'
-    },
-    'Pierre Gasly': {
-        'wins': 1, 'podiums': 5, 'poles': 0, 'championships': 0,
-        'debut': 2017, 'age': 28, 'country': '🇫🇷', 'image': '/images/drivers/pierre-gasly.jpg'
-    },
-    'Alex Albon': {
-        'wins': 0, 'podiums': 2, 'poles': 0, 'championships': 0,
-        'debut': 2019, 'age': 28, 'country': '🇹🇭', 'image': '/images/drivers/alex-albon.jpg'
-    },
-    'Lance Stroll': {
-        'wins': 0, 'podiums': 3, 'poles': 1, 'championships': 0,
-        'debut': 2017, 'age': 26, 'country': '🇨🇦', 'image': '/images/drivers/lance-stroll.jpg'
-    },
-    'Yuki Tsunoda': {
-        'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
-        'debut': 2021, 'age': 25, 'country': '🇯🇵', 'image': '/images/drivers/yuki-tsunoda.jpg'
-    },
-    'Nico Hülkenberg': {
-        'wins': 0, 'podiums': 1, 'poles': 1, 'championships': 0,
-        'debut': 2010, 'age': 37, 'country': '🇩🇪', 'image': '/images/drivers/nico-hulkenberg.jpg'
-    },
-    'Esteban Ocon': {
-        'wins': 1, 'podiums': 4, 'poles': 0, 'championships': 0,
-        'debut': 2016, 'age': 28, 'country': '🇫🇷', 'image': '/images/drivers/esteban-ocon.jpg'
-    },
-    'Kimi Antonelli': {
-        'wins': 0, 'podiums': 1, 'poles': 0, 'championships': 0,
-        'debut': 2025, 'age': 18, 'country': '🇮🇹', 'image': '/images/drivers/kimi-antonelli.jpg'
-    },
-    'Oliver Bearman': {
-        'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
-        'debut': 2024, 'age': 19, 'country': '🇬🇧', 'image': '/images/drivers/oliver-bearman.jpg'
-    },
-    'Franco Colapinto': {
-        'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
-        'debut': 2025, 'age': 22, 'country': '🇦🇷', 'image': '/images/drivers/franco-colapinto.jpg'
-    },
-    'Gabriel Bortoleto': {
-        'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
-        'debut': 2025, 'age': 20, 'country': '🇧🇷', 'image': '/images/drivers/gabriel-bortoleto.jpg'
-    },
-    'Isack Hadjar': {
-        'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
-        'debut': 2025, 'age': 20, 'country': '🇫🇷', 'image': '/images/drivers/isack-hadjar.jpg'
-    },
-    'Liam Lawson': {
-        'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
-        'debut': 2023, 'age': 23, 'country': '🇳🇿', 'image': '/images/drivers/liam-lawson.jpg'
+        'Max Verstappen': {
+            'wins': 65, 'podiums': 117, 'poles': 44, 'championships': 4,
+            'debut': 2015, 'age': 27, 'country': '🇳🇱', 'image': '/images/drivers/max-verstappen.jpg'
+        },
+        'Lewis Hamilton': {
+            'wins': 105, 'podiums': 202, 'poles': 104, 'championships': 7,
+            'debut': 2007, 'age': 40, 'country': '🇬🇧', 'image': '/images/drivers/lewis-hamilton.jpg'
+        },
+        'Charles Leclerc': {
+            'wins': 8, 'podiums': 47, 'poles': 26, 'championships': 0,
+            'debut': 2018, 'age': 27, 'country': '🇲🇨', 'image': '/images/drivers/charles-leclerc.jpg'
+        },
+        'Lando Norris': {
+            'wins': 8, 'podiums': 36, 'poles': 12, 'championships': 0,
+            'debut': 2019, 'age': 25, 'country': '🇬🇧', 'image': '/images/drivers/lando-norris.jpg'
+        },
+        'George Russell': {
+            'wins': 4, 'podiums': 20, 'poles': 6, 'championships': 0,
+            'debut': 2019, 'age': 27, 'country': '🇬🇧', 'image': '/images/drivers/george-russell.jpg'
+        },
+        'Fernando Alonso': {
+            'wins': 32, 'podiums': 106, 'poles': 22, 'championships': 2,
+            'debut': 2001, 'age': 43, 'country': '🇪🇸', 'image': '/images/drivers/fernando-alonso.jpg'
+        },
+        'Oscar Piastri': {
+            'wins': 7, 'podiums': 20, 'poles': 4, 'championships': 0,
+            'debut': 2023, 'age': 23, 'country': '🇦🇺', 'image': '/images/drivers/oscar-piastri.jpg'
+        },
+        'Carlos Sainz': {
+            'wins': 4, 'podiums': 27, 'poles': 6, 'championships': 0,
+            'debut': 2015, 'age': 30, 'country': '🇪🇸', 'image': '/images/drivers/carlos-sainz.jpg'
+        },
+        'Pierre Gasly': {
+            'wins': 1, 'podiums': 5, 'poles': 0, 'championships': 0,
+            'debut': 2017, 'age': 28, 'country': '🇫🇷', 'image': '/images/drivers/pierre-gasly.jpg'
+        },
+        'Alex Albon': {
+            'wins': 0, 'podiums': 2, 'poles': 0, 'championships': 0,
+            'debut': 2019, 'age': 28, 'country': '🇹🇭', 'image': '/images/drivers/alex-albon.jpg'
+        },
+        'Lance Stroll': {
+            'wins': 0, 'podiums': 3, 'poles': 1, 'championships': 0,
+            'debut': 2017, 'age': 26, 'country': '🇨🇦', 'image': '/images/drivers/lance-stroll.jpg'
+        },
+        'Yuki Tsunoda': {
+            'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
+            'debut': 2021, 'age': 25, 'country': '🇯🇵', 'image': '/images/drivers/yuki-tsunoda.jpg'
+        },
+        'Nico Hülkenberg': {
+            'wins': 0, 'podiums': 1, 'poles': 1, 'championships': 0,
+            'debut': 2010, 'age': 37, 'country': '🇩🇪', 'image': '/images/drivers/nico-hulkenberg.jpg'
+        },
+        'Esteban Ocon': {
+            'wins': 1, 'podiums': 4, 'poles': 0, 'championships': 0,
+            'debut': 2016, 'age': 28, 'country': '🇫🇷', 'image': '/images/drivers/esteban-ocon.jpg'
+        },
+        'Kimi Antonelli': {
+            'wins': 0, 'podiums': 1, 'poles': 0, 'championships': 0,
+            'debut': 2025, 'age': 18, 'country': '🇮🇹', 'image': '/images/drivers/kimi-antonelli.jpg'
+        },
+        'Oliver Bearman': {
+            'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
+            'debut': 2024, 'age': 19, 'country': '🇬🇧', 'image': '/images/drivers/oliver-bearman.jpg'
+        },
+        'Franco Colapinto': {
+            'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
+            'debut': 2025, 'age': 22, 'country': '🇦🇷', 'image': '/images/drivers/franco-colapinto.jpg'
+        },
+        'Gabriel Bortoleto': {
+            'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
+            'debut': 2025, 'age': 20, 'country': '🇧🇷', 'image': '/images/drivers/gabriel-bortoleto.jpg'
+        },
+        'Isack Hadjar': {
+            'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
+            'debut': 2025, 'age': 20, 'country': '🇫🇷', 'image': '/images/drivers/isack-hadjar.jpg'
+        },
+        'Liam Lawson': {
+            'wins': 0, 'podiums': 0, 'poles': 0, 'championships': 0,
+            'debut': 2023, 'age': 23, 'country': '🇳🇿', 'image': '/images/drivers/liam-lawson.jpg'
+        }
     }
-}
-
     
-    return jsonify(driver_stats)
+    return driver_stats
 
-@app.route('/api/constructor-standings', methods=['GET'])
-def get_constructor_standings():
+@app.get("/api/constructor-standings", response_model=List[Dict[str, Any]])
+async def get_constructor_standings():
     """Get current constructor championship standings"""
     
     standings = [
@@ -891,15 +958,14 @@ def get_constructor_standings():
         {'position': 10, 'team': 'Kick Sauber', 'points': 0, 'wins': 0}
     ]
     
-    return jsonify(standings)
+    return standings
 
-@app.route('/api/fantasy-team', methods=['POST'])
-def create_fantasy_team():
+@app.post("/api/fantasy-team", response_model=Dict[str, Any])
+async def create_fantasy_team(data: FantasyTeamRequest):
     """Enhanced fantasy team creation with ML-based scoring"""
     try:
-        data = request.json
-        team = data['team']
-        budget = data.get('budget', 100)
+        team = data.team
+        budget = data.budget
         
         # Enhanced driver values based on current season performance
         driver_values = {
@@ -913,12 +979,12 @@ def create_fantasy_team():
         }
         
         # Calculate team cost
-        total_cost = sum(driver_values.get(driver, 5) for driver in team['drivers'])
-        total_cost += current_teams.get(team['constructor'], {}).get('championships', 0) * 2
+        total_cost = sum(driver_values.get(driver, 5) for driver in team.drivers)
+        total_cost += current_teams.get(team.constructor, {}).get('championships', 0) * 2
         
         # Generate fantasy points using realistic performance
         fantasy_points = 0
-        for driver in team['drivers']:
+        for driver in team.drivers:
             driver_perf = get_realistic_driver_performance(driver)
             base_points = max(0, 25 - int(driver_perf['form']) + random.randint(-5, 15))
             
@@ -928,27 +994,27 @@ def create_fantasy_team():
             
             fantasy_points += base_points + experience_bonus + form_bonus
         
-        return jsonify({
+        return {
             'success': True,
-            'team': team,
+            'team': team.dict(),
             'total_cost': total_cost,
             'remaining_budget': budget - total_cost,
             'fantasy_points': fantasy_points,
             'valid': total_cost <= budget,
             'breakdown': {
-                'driver_costs': {driver: driver_values.get(driver, 5) for driver in team['drivers']},
-                'constructor_cost': current_teams.get(team['constructor'], {}).get('championships', 0) * 2
+                'driver_costs': {driver: driver_values.get(driver, 5) for driver in team.drivers},
+                'constructor_cost': current_teams.get(team.constructor, {}).get('championships', 0) * 2
             }
-        })
+        }
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        raise HTTPException(status_code=500, detail=str(e))
 
-@app.route('/api/model-info', methods=['GET'])
-def get_model_info():
+@app.get("/api/model-info", response_model=Dict[str, Any])
+async def get_model_info():
     """Get information about loaded models"""
     if not models:
-        return jsonify({'error': 'Models not loaded'}), 500
+        raise HTTPException(status_code=500, detail="Models not loaded")
     
     model_info = {
         'models_loaded': list(models.keys()),
@@ -958,10 +1024,10 @@ def get_model_info():
         'last_updated': datetime.now().isoformat()
     }
     
-    return jsonify(model_info)
+    return model_info
 
-@app.route('/api/health', methods=['GET'])
-def health_check():
+@app.get("/api/health", response_model=Dict[str, Any])
+async def health_check():
     """Comprehensive health check endpoint"""
     health_status = {
         'status': 'healthy',
@@ -977,12 +1043,35 @@ def health_check():
         'total_drivers': sum(len(team['drivers']) for team in current_teams.values())
     }
     
-    return jsonify(health_status)
+    return health_status
 
-if __name__ == '__main__':
-    print("🏎️  Starting Enhanced F1 Race Predictor API...")
-    print(f"🌐 API will be available at http://localhost:5059")
+# Root endpoint
+@app.get("/")
+async def root():
+    """Root endpoint with API information"""
+    return {
+        "message": "🏎️ F1 Race Predictor API v2.0",
+        "status": "operational",
+        "docs": "/docs",
+        "redoc": "/redoc",
+        "endpoints": {
+            "teams": "/api/teams",
+            "circuits": "/api/circuits", 
+            "predict": "/api/predict",
+            "driver_stats": "/api/driver-stats",
+            "constructor_standings": "/api/constructor-standings",
+            "fantasy_team": "/api/fantasy-team",
+            "model_info": "/api/model-info",
+            "health": "/api/health"
+        }
+    }
+
+if __name__ == "__main__":
+    print("🏎️  Starting Enhanced F1 Race Predictor FastAPI...")
+    print(f"🌐 API will be available at http://localhost:8000")
     print("📊 Enhanced Models status:", "✅ Loaded" if models else "❌ Not loaded")
+    print("📋 API Documentation available at: http://localhost:8000/docs")
+    print("📖 Alternative docs at: http://localhost:8000/redoc")
     
     if models:
         print("🔥 Enhanced Features:")
@@ -995,4 +1084,4 @@ if __name__ == '__main__':
         print("   • Driver personality and team philosophy factors")
         print("   • Grid position influence on strategy aggression")
     
-    app.run(debug=True, port=5059, host='0.0.0.0')
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
