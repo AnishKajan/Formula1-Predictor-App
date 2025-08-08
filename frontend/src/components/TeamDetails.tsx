@@ -63,7 +63,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 6, drivers: 8 },
       currentSeason: {
         position: 4,
-        points: 192,
+        points: 194,
         wins: 2,
         podiums: 5,
         poles: 4
@@ -115,7 +115,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 16, drivers: 15 },
       currentSeason: {
         position: 2,
-        points: 248,
+        points: 260,
         wins: 4,
         podiums: 4,
         poles: 0
@@ -149,7 +149,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/george-russell.jpg',
           championships: 0,
           wins: 4,
-          podiums: 20,
+          podiums: 21,
           debut: 2019
         },
         {
@@ -167,7 +167,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 8, drivers: 9 },
       currentSeason: {
         position: 3,
-        points: 220,
+        points: 236,
         wins: 1,
         podiums: 6,
         poles: 1
@@ -200,8 +200,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           age: 25,
           image: '/images/drivers/lando-norris.jpg',
           championships: 0,
-          wins: 8,
-          podiums: 37,
+          wins: 9,
+          podiums: 38,
           debut: 2019
         },
         {
@@ -212,14 +212,14 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/oscar-piastri.jpg',
           championships: 0,
           wins: 8,
-          podiums: 21,
+          podiums: 22,
           debut: 2023
         }
       ],
       championships: { constructors: 8, drivers: 12 },
       currentSeason: {
         position: 1,
-        points: 516,
+        points: 559,
         wins: 9,
         podiums: 20,
         poles: 8
@@ -271,7 +271,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
         position: 8,
-        points: 36,
+        points: 52,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -427,7 +427,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 1, drivers: 0 },
       currentSeason: {
         position: 7,
-        points: 41,
+        points: 45,
         wins: 0,
         podiums: 0,
         poles: 0
