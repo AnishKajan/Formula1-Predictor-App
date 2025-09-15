@@ -8,7 +8,7 @@ const StatisticsTable: React.FC = () => {
     wins: [
       { driver: "Lewis Hamilton", count: 103, years: "2007-Present", flag: "🇬🇧" },
       { driver: "Michael Schumacher", count: 91, years: "1991-2006", flag: "🇩🇪" },
-      { driver: "Max Verstappen", count: 61, years: "2016-Present", flag: "🇳🇱" },
+      { driver: "Max Verstappen", count: 66, years: "2016-Present", flag: "🇳🇱" },
       { driver: "Sebastian Vettel", count: 53, years: "2007-2022", flag: "🇩🇪" },
       { driver: "Alain Prost", count: 51, years: "1980-1993", flag: "🇫🇷" }
     ],
@@ -16,7 +16,7 @@ const StatisticsTable: React.FC = () => {
       { driver: "Lewis Hamilton", count: 201, years: "2007-Present", flag: "🇬🇧" },
       { driver: "Michael Schumacher", count: 155, years: "1991-2006", flag: "🇩🇪" },
       { driver: "Sebastian Vettel", count: 122, years: "2007-2022", flag: "🇩🇪" },
-      { driver: "Max Verstappen", count: 104, years: "2016-Present", flag: "🇳🇱" },
+      { driver: "Max Verstappen", count: 119, years: "2016-Present", flag: "🇳🇱" },
       { driver: "Fernando Alonso", count: 98, years: "2001-Present", flag: "🇪🇸" }
     ],
     poles: [
@@ -24,7 +24,7 @@ const StatisticsTable: React.FC = () => {
       { driver: "Michael Schumacher", count: 68, years: "1991-2006", flag: "🇩🇪" },
       { driver: "Ayrton Senna", count: 65, years: "1984-1994", flag: "🇧🇷" },
       { driver: "Sebastian Vettel", count: 57, years: "2007-2022", flag: "🇩🇪" },
-      { driver: "Max Verstappen", count: 40, years: "2016-Present", flag: "🇳🇱" }
+      { driver: "Max Verstappen", count: 45, years: "2016-Present", flag: "🇳🇱" }
     ],
     championships: [
       { driver: "Lewis Hamilton", count: 7, years: "2008, 2014-2015, 2017-2020", flag: "🇬🇧" },
