@@ -8,7 +8,7 @@ const StatisticsTable: React.FC = () => {
     wins: [
       { driver: "Lewis Hamilton", count: 103, years: "2007-Present", flag: "🇬🇧" },
       { driver: "Michael Schumacher", count: 91, years: "1991-2006", flag: "🇩🇪" },
-      { driver: "Max Verstappen", count: 66, years: "2016-Present", flag: "🇳🇱" },
+      { driver: "Max Verstappen", count: 67, years: "2016-Present", flag: "🇳🇱" },
       { driver: "Sebastian Vettel", count: 53, years: "2007-2022", flag: "🇩🇪" },
       { driver: "Alain Prost", count: 51, years: "1980-1993", flag: "🇫🇷" }
     ],

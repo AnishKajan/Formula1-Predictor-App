@@ -44,8 +44,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           age: 27,
           image: '/images/drivers/max-verstappen.png',
           championships: 4,
-          wins: 66,
-          podiums: 119,
+          wins: 67,
+          podiums: 120,
           debut: 2015
         },
         {
@@ -63,10 +63,10 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 6, drivers: 8 },
       currentSeason: {
         position: 4,
-        points: 239,
+        points: 272,
         wins: 3,
         podiums: 7,
-        poles: 5
+        poles: 6
       },
       history: 'Originally founded as Stewart Grand Prix in 1997, the team was purchased by Red Bull in 2005. Under their ownership, Red Bull Racing has become one of the most successful teams in F1 history, winning multiple championships and establishing themselves as a dominant force in the sport.',
       achievements: [
@@ -114,8 +114,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 16, drivers: 15 },
       currentSeason: {
-        position: 2,
-        points: 280,
+        position: 3,
+        points: 286,
         wins: 0,
         podiums: 5,
         poles: 1
@@ -149,7 +149,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/george-russell.jpg',
           championships: 0,
           wins: 4,
-          podiums: 21,
+          podiums: 22,
           debut: 2019
         },
         {
@@ -166,10 +166,10 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 8, drivers: 9 },
       currentSeason: {
-        position: 3,
-        points: 260,
+        position: 2,
+        points: 286,
         wins: 1,
-        podiums: 7,
+        podiums: 6,
         poles: 1
       },
       history: 'Mercedes returned to F1 as a constructor in 2010 and dominated the hybrid era from 2014-2021. Known for technical excellence and strategic mastery under Toto Wolff\'s leadership.',
@@ -219,7 +219,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 8, drivers: 12 },
       currentSeason: {
         position: 1,
-        points: 617,
+        points: 623,
         wins: 12,
         podiums: 27,
         poles: 9
@@ -271,7 +271,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
         position: 8,
-        points: 52,
+        points: 62,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -368,14 +368,14 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/carlos-sainz.jpg',
           championships: 0,
           wins: 5,
-          podiums: 27,
+          podiums: 28,
           debut: 2015
         }
       ],
       championships: { constructors: 9, drivers: 7 },
       currentSeason: {
         position: 5,
-        points: 70,
+        points: 101,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -426,8 +426,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 1, drivers: 0 },
       currentSeason: {
-        position: 7,
-        points: 45,
+        position: 4,
+        points: 272,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -479,7 +479,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
         position: 9,
-        points: 35,
+        points: 44,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -530,8 +530,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
-        position: 6,
-        points: 43,
+        position: 8,
+        points: 55,
         wins: 0,
         podiums: 1,
         poles: 0
