@@ -45,7 +45,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/max-verstappen.png',
           championships: 4,
           wins: 67,
-          podiums: 120,
+          podiums: 121,
           debut: 2015
         },
         {
@@ -63,9 +63,9 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 6, drivers: 8 },
       currentSeason: {
         position: 4,
-        points: 272,
+        points: 290,
         wins: 3,
-        podiums: 7,
+        podiums: 8,
         poles: 6
       },
       history: 'Originally founded as Stewart Grand Prix in 1997, the team was purchased by Red Bull in 2005. Under their ownership, Red Bull Racing has become one of the most successful teams in F1 history, winning multiple championships and establishing themselves as a dominant force in the sport.',
@@ -115,7 +115,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 16, drivers: 15 },
       currentSeason: {
         position: 3,
-        points: 286,
+        points: 298,
         wins: 0,
         podiums: 5,
         poles: 1
@@ -148,8 +148,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           age: 26,
           image: '/images/drivers/george-russell.jpg',
           championships: 0,
-          wins: 4,
-          podiums: 22,
+          wins: 5,
+          podiums: 23,
           debut: 2019
         },
         {
@@ -167,10 +167,10 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 8, drivers: 9 },
       currentSeason: {
         position: 2,
-        points: 286,
-        wins: 1,
-        podiums: 6,
-        poles: 1
+        points: 325,
+        wins: 2,
+        podiums: 7,
+        poles: 2
       },
       history: 'Mercedes returned to F1 as a constructor in 2010 and dominated the hybrid era from 2014-2021. Known for technical excellence and strategic mastery under Toto Wolff\'s leadership.',
       achievements: [
@@ -201,7 +201,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           image: '/images/drivers/lando-norris.jpg',
           championships: 0,
           wins: 9,
-          podiums: 39,
+          podiums: 40,
           debut: 2019
         },
         {
@@ -219,9 +219,9 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 8, drivers: 12 },
       currentSeason: {
         position: 1,
-        points: 623,
+        points: 650,
         wins: 12,
-        podiums: 27,
+        podiums: 28,
         poles: 9
       },
       history: 'Founded by Bruce McLaren, the team has been a mainstay of F1 success. Famous for the McLaren-Honda partnership of the late 1980s and early 1990s with Ayrton Senna and Alain Prost.',
@@ -271,7 +271,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
         position: 8,
-        points: 62,
+        points: 68,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -375,7 +375,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 9, drivers: 7 },
       currentSeason: {
         position: 5,
-        points: 101,
+        points: 102,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -426,8 +426,8 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       ],
       championships: { constructors: 1, drivers: 0 },
       currentSeason: {
-        position: 4,
-        points: 272,
+        position: 6,
+        points: 72,
         wins: 0,
         podiums: 0,
         poles: 0
@@ -479,7 +479,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
       championships: { constructors: 0, drivers: 0 },
       currentSeason: {
         position: 9,
-        points: 44,
+        points: 46,
         wins: 0,
         podiums: 0,
         poles: 0
