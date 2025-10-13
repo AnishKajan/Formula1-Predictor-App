@@ -320,7 +320,7 @@ const TeamDetails: React.FC<TeamDetailsProps> = ({ selectedTeam }) => {
           debut: 2024
         }
       ],
-      championships: { constructors: 2, drivers: 0 },
+      championships: { constructors: 2, drivers: 2 },
       currentSeason: {
         position: 10,
         points: 20,
